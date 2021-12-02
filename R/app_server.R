@@ -15,10 +15,10 @@ app_server <- function( input, output, session ) {
   })
 
   output$m4441<-renderTable({
-    m4
+    head(m4)
   })
 
   output$m666<-renderTable({
-    m6
+    head(m6)
   })
 }
