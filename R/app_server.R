@@ -19,6 +19,10 @@ app_server <- function( input, output, session ) {
   })
 
   output$m666<-renderTable({
-    m6
+    head(m6)
+  })
+
+  output$plot1<-renderPlot({
+    barplot(1:10, col = blues_pal(seq(0,1,length.out=10)))
   })
 }
