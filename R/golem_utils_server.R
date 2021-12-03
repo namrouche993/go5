@@ -2,14 +2,10 @@
 #'
 #' @noRd
 #'
-#' @examples
-#' 1 %not_in% 1:10
-#' not_null(NULL)
-`%not_in%` <- Negate(`%in%`)
-
-not_null <- Negate(is.null)
-
-not_na <- Negate(is.na)
+#' @importFrom grDevices rgb colorRamp
+blues_pal <-  function(x) rgb(colorRamp(c("#D3D3D3", "#041c40"))(x), maxColorValue = 255)
+greens_pal <-  function(x) rgb(colorRamp(c("#ccd9d7", "#00423a"))(x), maxColorValue = 255)
+BuYlRd <- function(x) rgb(colorRamp(c("#cc0000","#c23e21","#7BCD58"))(x), maxColorValue = 255)
 
 
 #' Inverted versions of in, is.null and is.na

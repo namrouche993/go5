@@ -21,4 +21,9 @@ app_server <- function( input, output, session ) {
   output$m666<-renderTable({
     head(m6,2)
   })
+
+  output$plot1<-renderPlot({
+    hist(mtcars$mpg,col=blues_pal(seq(0,1,length.out=5)))
+  })
+
 }

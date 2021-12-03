@@ -14,7 +14,8 @@ app_ui <- function(request) {
       tableOutput("mtable1"),
       tableOutput("m333"),
       tableOutput("m4441"),
-      tableOutput("m666")
+      tableOutput("m666"),
+      plotOutput("plot1")
 
     )
   )
