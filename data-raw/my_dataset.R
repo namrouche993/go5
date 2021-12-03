@@ -9,3 +9,7 @@ usethis::use_data(m1,m1tcars,m3, overwrite = FALSE)
 
 m4=m1[1:10,c(1,3)]
 usethis::use_data(m4,m6,overwrite = TRUE,internal = TRUE)
+
+countries <- geojsonio::geojson_read(paste0(getwd(),"/data-raw/polbnda_dza.json"), what = "sp")
+usethis::use_data(countries, overwrite = FALSE)
+

@@ -3,6 +3,7 @@
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
 #' @import shiny
+#' @import leaflet
 #' @noRd
 app_ui <- function(request) {
   tagList(
@@ -15,7 +16,8 @@ app_ui <- function(request) {
       tableOutput("m333"),
       tableOutput("m4441"),
       tableOutput("m666"),
-      plotOutput("plot1")
+      plotOutput("plot1"),
+      leafletOutput("leaflet1")
 
     )
   )

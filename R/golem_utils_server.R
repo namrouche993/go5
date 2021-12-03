@@ -8,6 +8,7 @@ greens_pal <-  function(x) rgb(colorRamp(c("#ccd9d7", "#00423a"))(x), maxColorVa
 BuYlRd <- function(x) rgb(colorRamp(c("#cc0000","#c23e21","#7BCD58"))(x), maxColorValue = 255)
 
 
+
 #' Inverted versions of in, is.null and is.na
 #'
 #' @noRd
