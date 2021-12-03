@@ -7,7 +7,7 @@
 app_server <- function( input, output, session ) {
   # Your application server logic
   output$mtable1<-renderTable({
-    head(go5::m1)
+    head(go5::m1,2)
   })
 
   output$m333<-renderTable({
