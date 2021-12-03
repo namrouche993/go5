@@ -22,6 +22,8 @@ usethis::use_package("geojsonio")
 usethis::use_package("leaflet")
 usethis::use_package("leaflet.providers")
 usethis::use_package("leaflet.extras")
+usethis::use_package("tidyverse",type="depends")
+
 
 
 ## Add modules ----
