@@ -11,7 +11,7 @@ app_server <- function( input, output, session ) {
   })
 
   output$m333<-renderTable({
-    go5::m3
+    head(go5::m3,2)
   })
 
   output$m4441<-renderTable({
