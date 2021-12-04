@@ -6,7 +6,7 @@
 #' @import leaflet
 #' @import leaflet.providers
 #' @import leaflet.extras
-#' @import tidyverse
+#' @import dplyr
 #' @noRd
 app_server <- function( input, output, session ) {
   # Your application server logic
