@@ -18,6 +18,8 @@
 usethis::use_package("thinkr")
 usethis::use_package("readxl")
 usethis::use_package("grDevices")
+usethis::use_package("dplyr")
+
 
 
 

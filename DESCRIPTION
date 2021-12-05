@@ -8,8 +8,20 @@ Imports:
     config (>= 0.3.1),
     golem (>= 0.3.1.9003),
     grDevices,
+    attempt,
+    config,
+    dplyr,
+    DT,
+    geojsonio,
+    glue,
+    golem,
+    grDevices,
+    htmltools,
+    leaflet,
+    leaflet.extras,
+    leaflet.providers,
     readxl,
-    shiny (>= 1.7.1.9001),
+    shiny,
     thinkr
 Encoding: UTF-8
 LazyData: true
