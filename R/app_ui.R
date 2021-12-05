@@ -11,7 +11,7 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      h1("go50505"),
+      h1("go5050500001"),
       tableOutput("mtable1"),
       tableOutput("m333"),
       tableOutput("m4441"),
