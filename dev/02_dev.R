@@ -44,6 +44,27 @@ golem::add_sass_file("custom")
 ## If you have data in your package
 usethis::use_data_raw(name = "my_dataset", open = FALSE)
 
+usethis::use_data_raw(name = "Logements_Logement", open = FALSE)
+usethis::use_data_raw(name = "Logements_FicheWilaya", open = FALSE)
+usethis::use_data_raw(name = "maps_for_algeria_48", open = FALSE)
+
+
+usethis::use_data_raw(name = "Urbanisme", open = FALSE)
+
+usethis::use_data_raw(name = "EquipementsPublic", open = FALSE)
+
+usethis::use_data_raw(name = "Villes", open = FALSE)
+
+usethis::use_data_raw(name = "CMR_UF", open = FALSE)
+usethis::use_data_raw(name = "CMR_ACQ", open = FALSE)
+usethis::use_data_raw(name = "CMR_DTR", open = FALSE)
+usethis::use_data_raw(name = "CMR_Presentations", open = FALSE)
+
+
+
+
+
+
 ## Tests ----
 ## Add one line by test you want to create
 usethis::use_test("app")
