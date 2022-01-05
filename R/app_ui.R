@@ -17,7 +17,8 @@ app_ui <- function(request) {
       tableOutput("m4441"),
       tableOutput("m666"),
       plotOutput("plot1"),
-      leafletOutput("leaflet1")
+      leafletOutput("leaflet1"),
+      leafletOutput("leaflet58")
 
     )
   )

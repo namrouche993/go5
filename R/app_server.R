@@ -43,4 +43,14 @@ app_server <- function( input, output, session ) {
       addPolygons()
   })
 
+
+  output$leaflet58<-renderLeaflet({
+    leaflet(algeria58)%>%
+      setView(lng = 1.63333 , lat = 28.3667, zoom = 5)%>%
+      addProviderTiles("OpenStreetMap.BZH") %>%
+      setMapWidgetStyle(list(background= "#ffffff")) %>%
+      addPolygons()
+  })
+
+
 }
