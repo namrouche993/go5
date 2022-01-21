@@ -38,7 +38,9 @@ Imports:
     sass,
     shinytreeview (>= 0.0.5),
     sparkline,
-    RColorBrewer
+    RColorBrewer,
+    rpivotTable,
+    shinycssloaders
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2

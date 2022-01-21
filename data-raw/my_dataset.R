@@ -4,6 +4,14 @@
 #
 #
 
+jsCode1 <- "shinyjs.opac1 = function(params){$('#well_gauge').css('opacity', params);}"
+jsCode2 <- "shinyjs.opac2 = function(params){$('#well_gauge2').css('opacity', params);}"
+jsCode3 <- "shinyjs.opac3 = function(params){$('#well_gauge3').css('opacity', params);}"
+jsCode4 <- "shinyjs.opac4 = function(params){$('#well_gauge4').css('opacity', params);}"
+jsCode5 <- "shinyjs.opac5 = function(params){$('#well_gauge5').css('opacity', params);}"
+jsCode6 <- "shinyjs.opac6 = function(params){$('#well_gauge6').css('opacity', params);}"
+
+
 
 jsCode88 <- "shinyjs.opac88 = function(params){$('#well1 .pretty.p-default.p-switch.p-slim').css('display', params);}"
 
@@ -46,9 +54,9 @@ usethis::use_data(     livraison_wilayas,
 
                        algeria,mapdz,
 
-                       algeria58,wilayas58,mapdz58,
+                       indicateurWilaya,algeria58,wilayas58,mapdz58,
 
-                       jsCode88,jsCode99,
+                       jsCode1,jsCode2,jsCode3,jsCode4,jsCode5,jsCode6,jsCode88,jsCode99,
 
                        ##countries,
 
