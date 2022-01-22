@@ -3,10 +3,12 @@
 #' @param input,output,session Internal parameters for {shiny}.
 #'     DO NOT REMOVE.
 #' @import shiny
+#' @import dplyr
+#' @import tidyr
+#' @import shinyWidgets
 #' @import leaflet
 #' @import leaflet.providers
 #' @import leaflet.extras
-#' @import dplyr
 #' @import shinythemes
 #' @import shinyWidgets
 #' @import shinycssloaders
@@ -25,7 +27,7 @@
 #' @import shinytreeview
 #' @import sparkline
 #' @import RColorBrewer
-#'
+#' @importFrom stringr str_sub str_detect
 #' @noRd
 app_server <- function( input, output, session ) {
 
@@ -62,20 +64,20 @@ app_server <- function( input, output, session ) {
 
   data_fiche_wilaya_reactive_gt7=reactive({
     cbind(iad1=0,iad2=0,data_fiche_wilaya %>%
-            filter(arretee %in% `if`(str_sub(input$select_title_gt7,1,-6)=="Activité du 1er semestre",
+            filter(arretee %in% `if`(stringr::str_sub(input$select_title_gt7,1,-6)=="Activité du 1er semestre",
                                      c(as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-03-31")),
                                        as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-06-30"))
                                      ),
-                                     `if`(str_sub(input$select_title_gt7,1,-6)=="Activité du 01-01 au 30-09",
+                                     `if`(stringr::str_sub(input$select_title_gt7,1,-6)=="Activité du 01-01 au 30-09",
                                           c(as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-03-31")),
                                             as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-06-30")),
                                             as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-09-30"))
                                           ),
-                                          `if`(str_sub(input$select_title_gt7,1,-6)=="Activité du 2ème semestre",
+                                          `if`(stringr::str_sub(input$select_title_gt7,1,-6)=="Activité du 2ème semestre",
                                                c(as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-09-30")),
                                                  as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-12-31"))
                                                ),
-                                               `if`(str_sub(input$select_title_gt7,1,-6)=="Activité de l'année",
+                                               `if`(stringr::str_sub(input$select_title_gt7,1,-6)=="Activité de l'année",
                                                     c(as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-03-31")),
                                                       as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-06-30")),
                                                       as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-09-30")),
@@ -501,7 +503,7 @@ app_server <- function( input, output, session ) {
 
   output$divhover_encours_lpp<-renderUI({
     div(
-      actionBttn(
+      shinyWidgets::actionBttn(
         inputId = "divhover_encours_lpp_choose_line1",
         label = NULL,
         style = "simple",
@@ -512,7 +514,7 @@ app_server <- function( input, output, session ) {
 
       ),
       div(id="display_when_hover_divhover_encours_lpp_choose_line1",
-          actionBttn(
+          shinyWidgets::actionBttn(
             inputId = "button_fw1_divhover7",
             label = NULL,
             style = "bordered",
@@ -521,7 +523,7 @@ app_server <- function( input, output, session ) {
           ),
 
           reactableOutput("reactable_details_encours_lpp"),
-          bsModal("modal_fw1_divhover7", htmlOutput("tablededonnes1_fw1_divhover7"), "button_fw1_divhover7", size = "large"
+          shinyBS::bsModal("modal_fw1_divhover7", htmlOutput("tablededonnes1_fw1_divhover7"), "button_fw1_divhover7", size = "large"
                   ,excelOutput("excel_fw1_divhover7"))
 
       )
@@ -568,7 +570,7 @@ app_server <- function( input, output, session ) {
 
   output$divhover_encours_lv<-renderUI({
     div(
-      actionBttn(
+      shinyWidgets::actionBttn(
         inputId = "divhover_encours_lv_choose_line1",
         label = NULL,
         style = "simple",
@@ -579,7 +581,7 @@ app_server <- function( input, output, session ) {
 
       ),
       div(id="display_when_hover_divhover_encours_lv_choose_line1",
-          actionBttn(
+          shinyWidgets::actionBttn(
             inputId = "button_fw1_divhover6",
             label = NULL,
             style = "bordered",
@@ -588,7 +590,7 @@ app_server <- function( input, output, session ) {
           ),
 
           reactableOutput("reactable_details_encours_lv"),
-          bsModal("modal_fw1_divhover6", htmlOutput("tablededonnes1_fw1_divhover6"), "button_fw1_divhover6", size = "large"
+          shinyBS::bsModal("modal_fw1_divhover6", htmlOutput("tablededonnes1_fw1_divhover6"), "button_fw1_divhover6", size = "large"
                   ,excelOutput("excel_fw1_divhover6"))
 
       )
@@ -637,7 +639,7 @@ app_server <- function( input, output, session ) {
 
   output$divhover_encours_lsp<-renderUI({
     div(
-      actionBttn(
+      shinyWidgets::actionBttn(
         inputId = "divhover_encours_lsp_choose_line1",
         label = NULL,
         style = "simple",
@@ -648,7 +650,7 @@ app_server <- function( input, output, session ) {
 
       ),
       div(id="display_when_hover_divhover_encours_lsp_choose_line1",
-          actionBttn(
+          shinyWidgets::actionBttn(
             inputId = "button_fw1_divhover5",
             label = NULL,
             style = "bordered",
@@ -657,7 +659,7 @@ app_server <- function( input, output, session ) {
           ),
 
           reactableOutput("reactable_details_encours_lsp"),
-          bsModal("modal_fw1_divhover5", htmlOutput("tablededonnes1_fw1_divhover5"), "button_fw1_divhover5", size = "large"
+          shinyBS::bsModal("modal_fw1_divhover5", htmlOutput("tablededonnes1_fw1_divhover5"), "button_fw1_divhover5", size = "large"
                   ,excelOutput("excel_fw1_divhover5"))
 
       )
@@ -704,7 +706,7 @@ app_server <- function( input, output, session ) {
 
   output$divhover_encours_lpl<-renderUI({
     div(
-      actionBttn(
+      shinyWidgets::actionBttn(
         inputId = "divhover_encours_lpl_choose_line1",
         label = NULL,
         style = "simple",
@@ -715,7 +717,7 @@ app_server <- function( input, output, session ) {
 
       ),
       div(id="display_when_hover_divhover_encours_lpl_choose_line1",
-          actionBttn(
+          shinyWidgets::actionBttn(
             inputId = "button_fw1_divhover4",
             label = NULL,
             style = "bordered",
@@ -724,7 +726,7 @@ app_server <- function( input, output, session ) {
           ),
 
           reactableOutput("reactable_details_encours_lpl"),
-          bsModal("modal_fw1_divhover4", htmlOutput("tablededonnes1_fw1_divhover4"), "button_fw1_divhover4", size = "large"
+          shinyBS::bsModal("modal_fw1_divhover4", htmlOutput("tablededonnes1_fw1_divhover4"), "button_fw1_divhover4", size = "large"
                   ,excelOutput("excel_fw1_divhover4"))
 
 
@@ -771,7 +773,7 @@ app_server <- function( input, output, session ) {
 
   output$divhover_nonlances_rural<-renderUI({
     div(
-      actionBttn(
+      shinyWidgets::actionBttn(
         inputId = "divhover_nonlances_rural_choose_line1",
         label = NULL,
         style = "simple",
@@ -782,7 +784,7 @@ app_server <- function( input, output, session ) {
 
       ),
       div(id="display_when_hover_divhover_nonlances_rural_choose_line1",
-          actionBttn(
+          shinyWidgets::actionBttn(
             inputId = "button_fw1_divhover3",
             label = NULL,
             style = "bordered",
@@ -791,7 +793,7 @@ app_server <- function( input, output, session ) {
           ),
 
           reactableOutput("reactable_details_nonlances_rural"),
-          bsModal("modal_fw1_divhover3", htmlOutput("tablededonnes1_fw1_divhover3"), "button_fw1_divhover3", size = "large"
+          shinyBS::bsModal("modal_fw1_divhover3", htmlOutput("tablededonnes1_fw1_divhover3"), "button_fw1_divhover3", size = "large"
                   ,excelOutput("excel_fw1_divhover3"))
 
       )
@@ -844,7 +846,7 @@ app_server <- function( input, output, session ) {
 
   output$divhover_nonlances_lsp<-renderUI({
     div(
-      actionBttn(
+      shinyWidgets::actionBttn(
         inputId = "divhover_nonlances_lsp_choose_line1",
         label = NULL,
         style = "simple",
@@ -855,7 +857,7 @@ app_server <- function( input, output, session ) {
 
       ),
       div(id="display_when_hover_divhover_nonlances_lsp_choose_line1",
-          actionBttn(
+          shinyWidgets::actionBttn(
             inputId = "button_fw1_divhover2",
             label = NULL,
             style = "bordered",
@@ -864,7 +866,7 @@ app_server <- function( input, output, session ) {
           ),
 
           reactableOutput("reactable_details_nonlances_lsp"),
-          bsModal("modal_fw1_divhover2", htmlOutput("tablededonnes1_fw1_divhover2"), "button_fw1_divhover2", size = "large"
+          shinyBS::bsModal("modal_fw1_divhover2", htmlOutput("tablededonnes1_fw1_divhover2"), "button_fw1_divhover2", size = "large"
                   ,excelOutput("excel_fw1_divhover2"))
 
       )
@@ -912,7 +914,7 @@ app_server <- function( input, output, session ) {
 
   output$divhover_nonlances_lpl<-renderUI({
     div(
-      actionBttn(
+      shinyWidgets::actionBttn(
         inputId = "divhover_nonlances_lpl_choose_line1",
         label = NULL,
         style = "simple",
@@ -923,7 +925,7 @@ app_server <- function( input, output, session ) {
 
       ),
       div(id="display_when_hover_divhover_nonlances_lpl_choose_line1",
-          actionBttn(
+          shinyWidgets::actionBttn(
             inputId = "button_fw1_divhover1",
             label = NULL,
             style = "bordered",
@@ -931,7 +933,7 @@ app_server <- function( input, output, session ) {
             icon = icon("table")
           ),
           reactableOutput("reactable_details_nonlances_lpl"),
-          bsModal("modal_fw1_divhover1", htmlOutput("tablededonnes1_fw1_divhover1"), "button_fw1_divhover1", size = "large"
+          shinyBS::bsModal("modal_fw1_divhover1", htmlOutput("tablededonnes1_fw1_divhover1"), "button_fw1_divhover1", size = "large"
                   ,excelOutput("excel_fw1_divhover1"))
 
       )
@@ -946,7 +948,7 @@ app_server <- function( input, output, session ) {
                paste0("display:block;margin-left:215px;")
           ),
         div(id = "box-score-title8", "Patrimoine en Location au ",textOutput("boxscore8_arretee"),
-            actionBttn(
+            shinyWidgets::actionBttn(
               inputId = "button_fw8",
               label = NULL,
               style = "bordered",
@@ -957,7 +959,7 @@ app_server <- function( input, output, session ) {
         ),
         reactableOutput('gt8',width = '773px'),
 
-        bsModal("modal_fw8", htmlOutput("tablededonnes1_fw8"), "button_fw8", size = "large"
+        shinyBS::bsModal("modal_fw8", htmlOutput("tablededonnes1_fw8"), "button_fw8", size = "large"
                 ,excelOutput("excel_fw8"))
     )
   })
@@ -971,7 +973,7 @@ app_server <- function( input, output, session ) {
                paste0("display:block;margin-left:0px;")
           ),
         div(id = "box-score-title9", "Etat de la Cession au ",textOutput("boxscore9_arretee"),textOutput("boxscore9_wilaya"),
-            actionBttn(
+            shinyWidgets::actionBttn(
               inputId = "button_fw9",
               label = NULL,
               style = "bordered",
@@ -982,7 +984,7 @@ app_server <- function( input, output, session ) {
         ),
         reactableOutput('gt9',width = 'auto'),
 
-        bsModal("modal_fw9", htmlOutput("tablededonnes1_fw9"), "button_fw9", size = "large"
+        shinyBS::bsModal("modal_fw9", htmlOutput("tablededonnes1_fw9"), "button_fw9", size = "large"
                 ,excelOutput("excel_fw9"))
     )
   })
@@ -1003,7 +1005,7 @@ app_server <- function( input, output, session ) {
         ),
         div(id = "box-score-title3", "Logements LPL en instance d’attribution au ",textOutput("boxscore3_arretee"),textOutput("boxscore3_wilaya")),
         reactableOutput('gt3',width = 'auto'),
-        actionBttn(
+        shinyWidgets::actionBttn(
           inputId = "button_fw3",
           label = NULL,
           style = "bordered",
@@ -1011,7 +1013,7 @@ app_server <- function( input, output, session ) {
           icon = icon("table")
         ),
         reactableOutput('gt4',width = "675px"),
-        bsModal("modal_fw3", htmlOutput("tablededonnes1_fw3"), "button_fw3", size = "large"
+        shinyBS::bsModal("modal_fw3", htmlOutput("tablededonnes1_fw3"), "button_fw3", size = "large"
                 ,excelOutput("excel_fw3"))
     )
   })
@@ -1027,7 +1029,7 @@ app_server <- function( input, output, session ) {
         ),
         #"display:","none;"),
 
-        actionBttn(
+        shinyWidgets::actionBttn(
           inputId = "button_fw_attribution",
           label = NULL,
           style = "bordered",
@@ -1048,7 +1050,7 @@ app_server <- function( input, output, session ) {
             ",
             "Programme d'attribution de logements et aides arrété au",textOutput("boxscore_attribution_arretee"),textOutput("boxscore_attribution_wilaya")),
         reactableOutput('gt_attribution',width = '1232px'),
-        bsModal("modal_fw_attribution", htmlOutput("tablededonnes1_fw_attribution"), "button_fw_attribution", size = "large"
+        shinyBS::bsModal("modal_fw_attribution", htmlOutput("tablededonnes1_fw_attribution"), "button_fw_attribution", size = "large"
                 ,excelOutput("excel_fw_attribution"))
 
     )
@@ -1072,7 +1074,7 @@ app_server <- function( input, output, session ) {
         ),
         #"display:","none;"),
 
-        actionBttn(
+        shinyWidgets::actionBttn(
           inputId = "button_fw2",
           label = NULL,
           style = "bordered",
@@ -1093,7 +1095,7 @@ app_server <- function( input, output, session ) {
             ",
             "Aides à la réhabilitation au ",textOutput("boxscore2_arretee"),textOutput("boxscore2_wilaya")),
         reactableOutput('gt2',width = '1258px'),
-        bsModal("modal_fw2", htmlOutput("tablededonnes1_fw2"), "button_fw2", size = "large"
+        shinyBS::bsModal("modal_fw2", htmlOutput("tablededonnes1_fw2"), "button_fw2", size = "large"
                 ,excelOutput("excel_fw2"))
 
     )
@@ -1120,7 +1122,7 @@ app_server <- function( input, output, session ) {
 
 
 
-    dff$Saison=rep(paste(str_sub(input$select_title_gt7,13,-1)),9*61)
+    dff$Saison=rep(paste(stringr::str_sub(input$select_title_gt7,13,-1)),9*61)
     # `if`(as.numeric(substr(input$select_arretee_fichewilaya,19,20))==3,
     #                  rep(paste("1er trimestre",substr(input$select_arretee_fichewilaya,14,17)),9*61),
     #                  `if`(as.numeric(substr(input$select_arretee_fichewilaya,19,20))==6,
@@ -1138,20 +1140,20 @@ app_server <- function( input, output, session ) {
     #dfw=data_fiche_wilaya %>% filter(id_wilaya %in% c(1:58,100,101,102),arretee==substr(input$select_arretee_fichewilaya,14,23))
 
 
-    dfw=data_fiche_wilaya %>% filter(id_wilaya %in% c(1:58,100,101,102),arretee %in% `if`(str_sub(input$select_title_gt7,1,-6)=="Activité du 1er semestre",
+    dfw=data_fiche_wilaya %>% filter(id_wilaya %in% c(1:58,100,101,102),arretee %in% `if`(stringr::str_sub(input$select_title_gt7,1,-6)=="Activité du 1er semestre",
                                                                                           c(as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-03-31")),
                                                                                             as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-06-30"))
                                                                                           ),
-                                                                                          `if`(str_sub(input$select_title_gt7,1,-6)=="Activité du 01-01 au 30-09",
+                                                                                          `if`(stringr::str_sub(input$select_title_gt7,1,-6)=="Activité du 01-01 au 30-09",
                                                                                                c(as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-03-31")),
                                                                                                  as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-06-30")),
                                                                                                  as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-09-30"))
                                                                                                ),
-                                                                                               `if`(str_sub(input$select_title_gt7,1,-6)=="Activité du 2ème semestre",
+                                                                                               `if`(stringr::str_sub(input$select_title_gt7,1,-6)=="Activité du 2ème semestre",
                                                                                                     c(as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-09-30")),
                                                                                                       as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-12-31"))
                                                                                                     ),
-                                                                                                    `if`(str_sub(input$select_title_gt7,1,-6)=="Activité de l'année",
+                                                                                                    `if`(stringr::str_sub(input$select_title_gt7,1,-6)=="Activité de l'année",
                                                                                                          c(as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-03-31")),
                                                                                                            as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-06-30")),
                                                                                                            as.Date(paste0(substr(input$select_arretee_fichewilaya,14,17),"-09-30")),
@@ -1365,7 +1367,7 @@ app_server <- function( input, output, session ) {
   #   div(id='box-score6',style=`if`(substr(input$select_arretee_fichewilaya,14,23) %in% c('2020-12-31','2020-09-30','2020-03-31'),paste0('display:none'),paste0('display:block')),
   #        div(class = "box-score-title", "État des Lancements au ",textOutput("boxscore6_arretee"),textOutput("boxscore6_wilaya")),
   #        reactableOutput('gt6'),
-  #       actionBttn(
+  #       shinyWidgets::actionBttn(
   #         inputId = "button_fw5",
   #         label = NULL,
   #         style = "bordered",
@@ -2175,7 +2177,11 @@ app_server <- function( input, output, session ) {
 
   })
 
-  addResourcePath("pdf_files_DGCMR", paste0(getwd(),"/pdf_files_DGCMR"))
+  #addResourcePath("folderfiles", paste0(getwd(),"/folderfiles"))
+
+  addResourcePath("folderfiles", system.file("folderfiles", package = "go5"))
+
+
 
 
 
@@ -2184,7 +2190,7 @@ app_server <- function( input, output, session ) {
     `if`(input$select_presentations=="Bilan et Actions 3T 2021",
          tags$iframe(
            seamless="seamless",
-           src=paste0("pdf_files_DGCMR/HTML5Point_output_1/Presentation1.html"),
+           src=paste0("folderfiles/Presentaions/Construction_moyens_realisation/HTML5Point_output_1/Presentation1.html"),
            width="1750px",
            height="780px"
          ),
@@ -2192,14 +2198,14 @@ app_server <- function( input, output, session ) {
          `if`(input$select_presentations=="Synth?se du Bilan et Actions",
               tags$iframe(
                 seamless="seamless",
-                src=paste0("pdf_files_DGCMR/HTML5Point_output_2/Presentation2.html"),
+                src=paste0("folderfiles/Presentaions/Construction_moyens_realisation/HTML5Point_output_2/Presentation2.html"),
                 width="1750px",
                 height="780px"
               ),
               `if`(input$select_presentations=="Suivi de la mise en oeuvre du plan d'Action du Gouvernement",
                    tags$iframe(
                      seamless="seamless",
-                     src=paste0("pdf_files_DGCMR/HTML5Point_output_3/Presentation3.html"),
+                     src=paste0("folderfiles/Presentaions/Construction_moyens_realisation/HTML5Point_output_3/Presentation3.html"),
                      width="1750px",
                      height="780px"
                    )
@@ -2216,7 +2222,7 @@ app_server <- function( input, output, session ) {
 
   output$homepage_ren<-renderUI({
     tags$iframe(seamless="seamless",
-                src=paste0("pdf_files_DGCMR/","index6.html"),
+                src=paste0("folderfiles/homepage/","index6.html"),
                 width="100%",
                 height="830px",
                 style='border:0px'
@@ -2230,11 +2236,11 @@ app_server <- function( input, output, session ) {
   #    `if`(str_detect(input$tree,".html")==TRUE,
   #         tags$iframe(
   #           seamless="seamless",
-  #           src=paste0("pdf_files_DGCMR/",input$tree),
+  #           src=paste0("folderfiles/",input$tree),
   #           width="1300px",
   #           height="780px"
   #           )
-  #       #includeHTML(paste0(getwd(),"/pdf_files_DGCMR/",input$tree))
+  #       #includeHTML(paste0(getwd(),"/folderfiles/",input$tree))
   #              )
   #    )
   #  })
@@ -2243,7 +2249,7 @@ app_server <- function( input, output, session ) {
   output$html_homepage1<-renderUI({
     tags$iframe(
       seamless="seamless",
-      src=paste0("pdf_files_DGCMR/ORG_MHUV_FR.html"),
+      src=paste0("folderfiles/homepage/ORG_MHUV_FR.html"),
       width="1600px",
       height="780px"
     )
@@ -2256,7 +2262,7 @@ app_server <- function( input, output, session ) {
   #
   #            leafletOutput("mapsalgerie",height = 950),
   #
-  #            bsModal("modal_wilayas58", textOutput("sasa"), "preview", size = "large"
+  #            shinyBS::bsModal("modal_wilayas58", textOutput("sasa"), "preview", size = "large"
   #                    ,reactableOutput("reactable_58wilayas"))
   #   )
   #
@@ -2264,21 +2270,21 @@ app_server <- function( input, output, session ) {
 
   output$tree_file<-renderUI({
     `if`(length(input$tree)!=0,
-         `if`(str_detect(input$tree,".html")==TRUE,
-              `if`(file.exists(paste0(getwd(),"/pdf_files_DGCMR/niveau3/",input$tree))==TRUE,
+         `if`(stringr::str_detect(input$tree,".html")==TRUE,
+              `if`(file.exists(paste0(system.file("folderfiles", package = "go5"),"/DTR_files/niveau3/",input$tree))==TRUE,
                    tags$iframe(
                      seamless="seamless",
-                     src=paste0("pdf_files_DGCMR/niveau3/",input$tree),
+                     src=paste0("folderfiles/DTR_files/niveau3/",input$tree),
                      width="1300px",
                      height="780px"
                    ),
                    tags$iframe(
                      seamless="seamless",
-                     src=paste0("pdf_files_DGCMR/niveau2/",input$tree),
+                     src=paste0("folderfiles/DTR_files//niveau2/",input$tree),
                      width="1300px",
                      height="780px"
                    )
-                   #includeHTML(paste0(getwd(),"/pdf_files_DGCMR/",input$tree))
+                   #includeHTML(paste0(getwd(),"/folderfiles/",input$tree))
               )
          )
     )
@@ -3565,7 +3571,7 @@ app_server <- function( input, output, session ) {
                  etat_cession_fw %>%
                    filter(
                      arretee==substr(input$select_arretee_fichewilaya,14,23),
-                     id_wilaya %in% as.numeric(str_sub(unique(data_fiche_wilaya$Wilaya)[c(selected20_fichewilaya2())],1,2))
+                     id_wilaya %in% as.numeric(stringr::str_sub(unique(data_fiche_wilaya$Wilaya)[c(selected20_fichewilaya2())],1,2))
                    ) %>%
                    #group_by(OPGI) %>%
                    summarise_at(vars(LOGTS1:Logts_et_locx),sum,na.rm=TRUE)
@@ -3764,7 +3770,7 @@ app_server <- function( input, output, session ) {
                #arretee=="2021-03-31",
                #id_wilaya %in% as.numeric(unique(data_fiche_wilaya$id_wilaya)[c(selected20_fichewilaya2())])
                arretee==substr(input$select_arretee_fichewilaya,14,23),
-               id_wilaya %in% as.numeric(str_sub(unique(data_fiche_wilaya$Wilaya)[c(selected20_fichewilaya2())],1,2))
+               id_wilaya %in% as.numeric(stringr::str_sub(unique(data_fiche_wilaya$Wilaya)[c(selected20_fichewilaya2())],1,2))
              ) %>%
              group_by(OPGI) %>%
              summarise_at(vars(LOGTS1:Logts_et_locx),sum,na.rm=TRUE)
@@ -4011,7 +4017,7 @@ app_server <- function( input, output, session ) {
                    filter(
                      arretee==substr(input$select_arretee_fichewilaya,14,23),
 
-                     id_wilaya %in% as.numeric(str_sub(unique(data_fiche_wilaya$Wilaya)[c(selected20_fichewilaya2())],1,2))
+                     id_wilaya %in% as.numeric(stringr::str_sub(unique(data_fiche_wilaya$Wilaya)[c(selected20_fichewilaya2())],1,2))
                    ) %>%
                    #group_by(OPGI) %>%
                    summarise(Logements=sum(logements),Locaux=sum(Locaux)) %>%
@@ -4060,7 +4066,7 @@ app_server <- function( input, output, session ) {
                #id_wilaya %in% as.numeric(unique(data_fiche_wilaya$id_wilaya)[c(selected20_fichewilaya2())])
                arretee==substr(input$select_arretee_fichewilaya,14,23),
 
-               id_wilaya %in% as.numeric(str_sub(unique(data_fiche_wilaya$Wilaya)[c(selected20_fichewilaya2())],1,2))
+               id_wilaya %in% as.numeric(stringr::str_sub(unique(data_fiche_wilaya$Wilaya)[c(selected20_fichewilaya2())],1,2))
              ) %>%
              group_by(OPGI) %>%
              summarise(Logements=sum(logements),Locaux=sum(Locaux)) %>%
@@ -6210,7 +6216,7 @@ app_server <- function( input, output, session ) {
   #       mutate("Activite"=rep(c("Consistance","Acheves","En Cours","à l'Arrêt","Non Lances","Notifie"),5),
   #              "Segments"=rep(c("LPL","LSP/LPA","Rural","Location-Vente","LPP"),each=6)) %>%
   #       `colnames<-`(c("Nb", "Activite", "Segments")) %>%
-  #       spread(Activite,Nb) %>% select(1,3,2,5,4,6,7) %>%
+  #       tidyr::spread(Activite,Nb) %>% select(1,3,2,5,4,6,7) %>%
   #         select(1,5,2,4,3,6,7)
   #     #   %>%
   #     #   mutate(Notifie=notifie_reactive() %>% t() %>% as.vector()) %>%
@@ -6493,13 +6499,6 @@ app_server <- function( input, output, session ) {
 
 
 
-  output$tablededonnes1_sitphy<-renderUI(
-    HTML(paste(
-      '<span style="font-size:25px;vertical-align:-25%;">Table de données</span> <br> <span style="font-size:13px;">Situation Arrétée au :&nbsp;&nbsp; </span> <span style="font-size:14px;">',substr(input$select_arretee_sitphy,14,23),'</span>'
-    ))
-
-  )
-
   output$tablededonnes1_fw1_divhover7<-renderUI(
     HTML(paste(
       "<span style='font-size:25px;vertical-align:-25%;'>Taux d'Avancement du Programme LPP</span> <br> <span style='font-size:13px;'>Situation Arrétée au :&nbsp;&nbsp; </span> <span style='font-size:14px;'>",substr(input$select_arretee_fichewilaya,14,23),"&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;",
@@ -6586,7 +6585,7 @@ app_server <- function( input, output, session ) {
   output$tablededonnes1_fw7<-renderUI(
     HTML(paste(
       "<span style='font-size:25px;vertical-align:-25%;'>",
-      paste("Activité du",str_sub(input$select_title_gt7,13,-1))
+      paste("Activité du",stringr::str_sub(input$select_title_gt7,13,-1))
       #paste(unlist(strsplit(input$select_title_gt7, split=" "))[unlist(strsplit(input$select_title_gt7, split=" "))!=c("Activité","du")], collapse=" ")
       ,"</span>
       <br> <span style='font-size:13px;'>",
@@ -7084,7 +7083,7 @@ app_server <- function( input, output, session ) {
       group_by(Secteur) %>%
       summarise("Acheves"=sum(Acheves),"En Cours"=sum(`En Cours`),"Non Lances"=sum(`Non Lances`),"Dont NIR"=sum(`Dont NIR`),"Geles"=sum(Geles)
       ) %>%
-      gather("Cas","Nb",2:6) %>%
+      tidyr::gather("Cas","Nb",2:6) %>%
       arrange(desc(Cas))
   })
 
@@ -7096,7 +7095,7 @@ app_server <- function( input, output, session ) {
                 pnonl=sum(`Non Lances`)/sum(`Nbre de Projets`),pdontnir=sum(`Dont NIR`)/sum(`Nbre de Projets`),
                 sum(`Geles`)/sum(`Nbre de Projets`)
       ) %>%
-      gather("Cas","Nb_p",2:6) %>%
+      tidyr::gather("Cas","Nb_p",2:6) %>%
       arrange(desc(Cas))
   })
 
@@ -7392,20 +7391,6 @@ app_server <- function( input, output, session ) {
 
 
 
-
-
-
-  output$excel_sitphy<-renderExcel({
-    excelTable(editable = FALSE,showToolbar = TRUE,
-
-               sitphy2[,-1] %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23)),
-
-               #columns = data.frame(title=rep("",ncol(sitphy2))),
-               #mergeCells = list(A1=c(1,2),B1=c(9,1),K1=c(9,1),T1=c(9,1),AC1=c(9,1),AL1=c(9,1)   ),
-               columnSorting=FALSE,search=TRUE
-    )
-  })
-
   select_villes_reactive<-reactive({
     `if`(input$select_villes=="Villes",data.frame(setview_lat=33.994278,setview_long=2.905987,zoom=6),data_ville[data_ville$Nom==input$select_villes,c(8,7,4,6,5)])
   })
@@ -7548,77 +7533,6 @@ app_server <- function( input, output, session ) {
                                                     direction = "top",offset = c(0,-35),opacity = 0.95)
       )
   })
-
-  output$val_livraison_gauge1<-renderText({
-    paste(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements` %in% select_segment()) %>% summarise(sum(Livraison))*1,trim=TRUE,digits=3,big.mark=" ",scientific = FALSE))
-  })
-
-
-  output$val_prevision_gauge1<-renderText({
-    paste(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements` %in% select_segment()) %>% summarise(sum(Prevision))*1,trim=TRUE,digits=3,big.mark=" ",scientific = FALSE))
-  })
-
-  #####
-
-  output$val_livraison_gauge2<-renderText({
-    paste(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements`=="LPL") %>% summarise(sum(Livraison))*1,trim=TRUE,digits=3,big.mark=" ",scientific = FALSE))
-  })
-
-
-  output$val_prevision_gauge2<-renderText({
-    paste(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements`=="LPL") %>% summarise(sum(Prevision))*1,trim=TRUE,digits=3,big.mark=" ",scientific = FALSE))
-  })
-
-  #####
-
-
-  output$val_livraison_gauge3<-renderText({
-    paste(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements`=="LSP/LPA") %>% summarise(sum(Livraison))*1,trim=TRUE,digits=3,big.mark=" ",scientific = FALSE))
-  })
-
-
-  output$val_prevision_gauge3<-renderText({
-    paste(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements`=="LSP/LPA") %>% summarise(sum(Prevision))*1,trim=TRUE,digits=3,big.mark=" ",scientific = FALSE))
-  })
-
-  #####
-
-
-  output$val_livraison_gauge4<-renderText({
-    paste(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements`=="Rural") %>% summarise(sum(Livraison))*1,trim=TRUE,digits=3,big.mark=" ",scientific = FALSE))
-  })
-
-
-  output$val_prevision_gauge4<-renderText({
-    paste(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements`=="Rural") %>% summarise(sum(Prevision))*1,trim=TRUE,digits=3,big.mark=" ",scientific = FALSE))
-  })
-
-  #####
-
-
-  output$val_livraison_gauge5<-renderText({
-    paste(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements`=="Location-Vente") %>% summarise(sum(Livraison))*1,trim=TRUE,digits=3,big.mark=" ",scientific = FALSE))
-  })
-
-
-  output$val_prevision_gauge5<-renderText({
-    paste(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements`=="Location-Vente") %>% summarise(sum(Prevision))*1,trim=TRUE,digits=3,big.mark=" ",scientific = FALSE))
-  })
-
-  #####
-
-
-  output$val_livraison_gauge6<-renderText({
-    paste(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements`=="LPP") %>% summarise(sum(Livraison))*1,trim=TRUE,digits=3,big.mark=" ",scientific = FALSE))
-  })
-
-
-  output$val_prevision_gauge6<-renderText({
-    paste(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements`=="LPP") %>% summarise(sum(Prevision))*1,trim=TRUE,digits=3,big.mark=" ",scientific = FALSE))
-  })
-
-  #####
-
   reactive_arrete_fichewilaya<-reactive({
     paste0(substr(input$select_arretee_fichewilaya,14,23))
   })
@@ -7639,37 +7553,6 @@ app_server <- function( input, output, session ) {
   #})
 
   observe({
-    `if`(length(input$select_segment_gauge) %in% c(0,2,3,4,5),
-         js$opac1('1'),
-         js$opac1('0.13')
-    )
-
-    `if`(length(which(input$select_segment_gauge=="LPL"))!=0 | length(input$select_segment_gauge) %in% c(0,5),
-         js$opac2('1'),
-         js$opac2('0.13')
-    )
-
-
-    `if`(length(which(input$select_segment_gauge=="LSP/LPA"))!=0 | length(input$select_segment_gauge) %in% c(0,5),
-         js$opac3('1'),
-         js$opac3('0.13')
-    )
-
-    `if`(length(which(input$select_segment_gauge=="Rural"))!=0 | length(input$select_segment_gauge) %in% c(0,5),
-         js$opac4('1'),
-         js$opac4('0.13')
-    )
-
-    `if`(length(which(input$select_segment_gauge=="Location-Vente"))!=0 | length(input$select_segment_gauge) %in% c(0,5),
-         js$opac5('1'),
-         js$opac5('0.13')
-    )
-
-
-    `if`(length(which(input$select_segment_gauge=="LPP"))!=0 | length(input$select_segment_gauge) %in% c(0,5),
-         js$opac6('1'),
-         js$opac6('0.13')
-    )
 
 
     # `if`(as.numeric(selected20_fichewilaya())==16,
@@ -7689,273 +7572,11 @@ app_server <- function( input, output, session ) {
 
   })
 
-  output$toutsegments_gauge<-renderText({
-    `if`(length(input$select_segment_gauge) %in% c(0,1,5),
-         print("Tous les Segments"),
-         paste(input$select_segment_gauge,collapse="+")
-    )
-  })
-
-
-  output$wilayaselectgauge1<-renderText({
-    `if`(length(selected20())==48,paste("Toutes les Wilayas"),sitphy$Wilaya_matricule[selected20()])
-  })
-
-  output$wilayaselectgauge2<-renderText({
-    `if`(length(selected20())==48,paste("Toutes les Wilayas"),sitphy$Wilaya_matricule[selected20()])
-  })
-
-
-  output$wilayaselectgauge3<-renderText({
-    `if`(length(selected20())==48,paste("Toutes les Wilayas"),sitphy$Wilaya_matricule[selected20()])
-  })
-
-
-  output$wilayaselectgauge4<-renderText({
-    `if`(length(selected20())==48,paste("Toutes les Wilayas"),sitphy$Wilaya_matricule[selected20()])
-  })
-
-
-  output$wilayaselectgauge5<-renderText({
-    `if`(length(selected20())==48,paste("Toutes les Wilayas"),sitphy$Wilaya_matricule[selected20()])
-  })
-
-  output$wilayaselectgauge6<-renderText({
-    `if`(length(selected20())==48,paste("Toutes les Wilayas"),sitphy$Wilaya_matricule[selected20()])
-  })
-
-  output$gauge6=renderHighchart({
-    highchart() %>%
-      hc_chart(type = "solidgauge",height='88%') %>%
-      hc_pane(
-        startAngle = -90,
-        endAngle = 90,
-        background = list(
-          outerRadius = '100%',
-          innerRadius = '60%',
-          shape = "arc"
-        )
-      ) %>%
-      hc_tooltip(enabled = FALSE) %>%
-      hc_yAxis(
-        stops = list_parse2(col_stops),
-        lineWidth = 0,
-        minorTickWidth = 0,
-        tickAmount = 2,
-        min = 0,
-        max = 100,
-        labels = list(y = 26, style = list(fontSize = "22px"))
-      ) %>%
-      hc_add_series(
-        data=as.numeric(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements`=="LPP") %>% summarise(sum(Livraison)/sum(Prevision))*100,scientific = FALSE,digits = 0)),
-        dataLabels = list(
-          y = -50,
-          borderWidth = 0,
-          useHTML = TRUE,
-          format="<span style='font-size:40px;font-family:inherit;'>{y}</span><span style='font-size:36px;font-family:inherit;opacity:1'>%</span>",
-          style = list(fontSize = "40px"  )
-        )
-      )
-  })
-
-
-
-  output$gauge5=renderHighchart({
-    highchart() %>%
-      hc_chart(type = "solidgauge",height='88%') %>%
-      hc_pane(
-        startAngle = -90,
-        endAngle = 90,
-        background = list(
-          outerRadius = '100%',
-          innerRadius = '60%',
-          shape = "arc"
-        )
-      ) %>%
-      hc_tooltip(enabled = FALSE) %>%
-      hc_yAxis(
-        stops = list_parse2(col_stops),
-        lineWidth = 0,
-        minorTickWidth = 0,
-        tickAmount = 2,
-        min = 0,
-        max = 100,
-        labels = list(y = 26, style = list(fontSize = "22px"))
-      ) %>%
-      hc_add_series(
-        data=as.numeric(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements`=="Location-Vente") %>% summarise(sum(Livraison)/sum(Prevision))*100,scientific = FALSE,digits = 0)),
-        dataLabels = list(
-          y = -50,
-          borderWidth = 0,
-          useHTML = TRUE,
-          format="<span style='font-size:40px;font-family:inherit;'>{y}</span><span style='font-size:36px;font-family:inherit;opacity:1'>%</span>",
-          style = list(fontSize = "40px"  )
-        )
-      )
-  })
-
-
-  output$gauge4=renderHighchart({
-    highchart() %>%
-      hc_chart(type = "solidgauge",height='88%') %>%
-      hc_pane(
-        startAngle = -90,
-        endAngle = 90,
-        background = list(
-          outerRadius = '100%',
-          innerRadius = '60%',
-          shape = "arc"
-        )
-      ) %>%
-      hc_tooltip(enabled = FALSE) %>%
-      hc_yAxis(
-        stops = list_parse2(col_stops),
-        lineWidth = 0,
-        minorTickWidth = 0,
-        tickAmount = 2,
-        min = 0,
-        max = 100,
-        labels = list(y = 26, style = list(fontSize = "22px"))
-      ) %>%
-      hc_add_series(
-        data=as.numeric(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements`=="Rural") %>% summarise(sum(Livraison)/sum(Prevision))*100,scientific = FALSE,digits = 0)),
-        dataLabels = list(
-          y = -50,
-          borderWidth = 0,
-          useHTML = TRUE,
-          format="<span style='font-size:40px;font-family:inherit;'>{y}</span><span style='font-size:36px;font-family:inherit;opacity:1'>%</span>",
-          style = list(fontSize = "40px"  )
-        )
-      )
-  })
-
-
-
-  output$gauge3=renderHighchart({
-    highchart() %>%
-      hc_chart(type = "solidgauge",height='88%') %>%
-      hc_pane(
-        startAngle = -90,
-        endAngle = 90,
-        background = list(
-          outerRadius = '100%',
-          innerRadius = '60%',
-          shape = "arc"
-        )
-      ) %>%
-      hc_tooltip(enabled = FALSE) %>%
-      hc_yAxis(
-        stops = list_parse2(col_stops),
-        lineWidth = 0,
-        minorTickWidth = 0,
-        tickAmount = 2,
-        min = 0,
-        max = 100,
-        labels = list(y = 26, style = list(fontSize = "22px"))
-      ) %>%
-      hc_add_series(
-        data=as.numeric(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements`=="LSP/LPA") %>% summarise(sum(Livraison)/sum(Prevision))*100,scientific = FALSE,digits = 0)),
-        dataLabels = list(
-          y = -50,
-          borderWidth = 0,
-          useHTML = TRUE,
-          format="<span style='font-size:40px;font-family:inherit;'>{y}</span><span style='font-size:36px;font-family:inherit;opacity:1'>%</span>",
-          style = list(fontSize = "40px"  )
-        )
-      )
-  })
-
-
-  output$gauge2=renderHighchart({
-    highchart() %>%
-      hc_chart(type = "solidgauge",height='88%') %>%
-      hc_pane(
-        startAngle = -90,
-        endAngle = 90,
-        background = list(
-          outerRadius = '100%',
-          innerRadius = '60%',
-          shape = "arc"
-        )
-      ) %>%
-      hc_tooltip(enabled = FALSE) %>%
-      hc_yAxis(
-        stops = list_parse2(col_stops),
-        lineWidth = 0,
-        minorTickWidth = 0,
-        tickAmount = 2,
-        min = 0,
-        max = 100,
-        labels = list(y = 26, style = list(fontSize = "22px"))
-      ) %>%
-      hc_add_series(
-        data=as.numeric(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements`=="LPL") %>% summarise(sum(Livraison)/sum(Prevision))*100,scientific = FALSE,digits = 0)),
-        dataLabels = list(
-          y = -50,
-          borderWidth = 0,
-          useHTML = TRUE,
-          format="<span style='font-size:40px;font-family:inherit;'>{y}</span><span style='font-size:36px;font-family:inherit;opacity:1'>%</span>",
-          style = list(fontSize = "40px"  )
-        )
-
-      )
-  })
-
-
-  output$gauge1=renderHighchart({
-    highchart() %>%
-      hc_chart(type = "solidgauge",height='88%') %>%
-      hc_pane(
-        startAngle = -90,
-        endAngle = 90,
-        background = list(
-          outerRadius = '100%',
-          innerRadius = '60%',
-          shape = "arc"
-        )
-      ) %>%
-      hc_tooltip(enabled = FALSE) %>%
-      hc_yAxis(
-        stops = list_parse2(col_stops),
-        lineWidth = 0,
-        minorTickWidth = 0,
-        tickAmount = 2,
-        min = 0,
-        max = 100,
-        labels = list(y = 26, style = list(fontSize = "22px"))
-      ) %>%
-      hc_add_series(
-        #data = round(100*sum(sitphy$Livraison[sitphy$id==selected20() & sitphy$`Type de logements` %in% select_segment()])/sum(sitphy$Prevision[sitphy$id==selected20()])),
-        data=as.numeric(format(sitphy %>% filter(Arretee==substr(input$select_arretee_sitphy,14,23),id %in% selected20(),`Type de logements` %in% select_segment()) %>% summarise(sum(Livraison)/sum(Prevision))*100,scientific = FALSE,digits = 0)),
-        dataLabels = list(
-          y = -50,
-          borderWidth = 0,
-          useHTML = TRUE,
-          format="<span style='font-size:40px;font-family:inherit;'>{y}</span><span style='font-size:36px;font-family:inherit;opacity:1'>%</span>",
-          style = list(fontSize = "40px"  )
-        )
-      )
-  })
-
-  select_segment=reactive({
-    `if`(length(input$select_segment_gauge)==0,c("Rural","LPL","Location-Vente","LSP/LPA","LPP"),input$select_segment_gauge)
-  })
-
-
-  select_segment_title=reactive({
-    `if`(length(input$select_segment_gauge) %in% c(0,5),"( Tous les Segments )",input$select_segment_gauge)
-  })
-
-  selected2 <- reactive(getReactableState("table2", "selected"))
 
   selected2_fichewilaya <- reactive(getReactableState("table2_fichewilaya", "selected"))
 
   selected2_fichewilaya_mr <- reactive(getReactableState("table2_fichewilaya_mr", "selected"))
 
-
-  selected20 <- reactive(
-    `if`(length(getReactableState("table2", "selected"))==0,1:48,getReactableState("table2", "selected"))
-  )
 
 
   selected20_fichewilaya2 <- reactive({
@@ -8001,29 +7622,6 @@ app_server <- function( input, output, session ) {
   selected20_fichewilaya_mr <- reactive(
     `if`(length(getReactableState("table2_fichewilaya_mr", "selected"))==0,1:48,getReactableState("table2_fichewilaya_mr", "selected"))
   )
-
-  output$wgauge=renderText({
-    print(selected20())
-  })
-
-  sitphy00=reactive({
-    sitphy %>%
-      filter(Arretee==substr(input$select_arretee_sitphy,14,23),`Type de logements` %in% select_segment()) %>%
-      group_by(Wilaya_matricule) %>%
-      summarise(Livraison=sum(Livraison),Prevision=sum(Prevision),Consistance=sum(Consistance),"Achevés"=sum(`Achevés`),"En Cours"=sum(`En Cours`),"Non Lancés"=sum(`Non lancés`)) %>%
-      rename(Wilaya=Wilaya_matricule) %>% rowwise() %>%
-      #mutate(Consistance=format(Consistance2,big.mark = " ",trim=TRUE,digits = 3)) %>%
-      #mutate("Achevés"=sprintf("%1.0f%%", 100*sum(Achevés)/sum(Consistance2))) %>%
-      #mutate("En Cours"=sprintf("%1.0f%%", 100*sum(`En Cours`)/sum(Consistance2))) %>%
-      #mutate("Non Lancés"=sprintf("%1.0f%%", 100*sum(`Non Lancés`)/sum(Consistance2))) %>%
-      mutate("Achevés"=sum(`Achevés`)/sum(Consistance)) %>%
-      mutate("En Cours"=sum(`En Cours`)/sum(Consistance)) %>%
-      mutate(`Non Lancés`=sum(`Non Lancés`)/sum(Consistance)) %>%
-      mutate(a=as.numeric(str_sub(`Achevés`,-3,-2))) %>%
-      select(Wilaya,Consistance,`Achevés`,`En Cours`,`Non Lancés`) %>%
-      replace_na(list(`Achevés`=0,`En Cours`=0,`Non Lancés`=0))
-
-  })
 
 
 
@@ -8087,56 +7685,6 @@ app_server <- function( input, output, session ) {
 
 
 
-
-
-  output$table2 <- renderReactable({
-    reactable(sitphy00(),defaultPageSize = 48,striped = TRUE,
-              selection = "single",
-              borderless = TRUE,
-              height="800px",
-              width="64%",
-
-              columns = list(
-                Wilaya = colDef(width = 148,align="left",footer="Total"),   # 50% width, 200px minimum
-                Consistance=colDef(format=colFormat(digits = 0,separators = TRUE,locales = "fr-FR"),width = 104,align="center",footer=format(sum(sitphy00()$Consistance),trim=TRUE,digits = 3,big.mark = " ")),
-                `Achevés`=colDef(format=colFormat(percent = TRUE,digits = 0),width = 80,align="center",footer=sprintf("%3.0f %%",100*sum(sitphy00()$Consistance*sitphy00()$Achevés)/sum(sitphy00()$Consistance)),
-                                 style = function(value) {
-                                   color<-green_pal(value)
-                                   list(background=color)
-                                 }
-                ),
-                `En Cours`=colDef(format=colFormat(percent = TRUE,digits = 0),width = 85,align="center",footer=sprintf("%3.0f %%",100*sum(sitphy00()$Consistance*sitphy00()$`En Cours`)/sum(sitphy00()$Consistance)),
-                                  style = function(value) {
-                                    color<-blue_pal(value)
-                                    list(background=color)
-                                  }),
-                `Non Lancés`=colDef(format=colFormat(percent = TRUE,digits = 0),width = 99,align="center",footer=sprintf("%3.0f %%",100*sum(sitphy00()$Consistance*sitphy00()$`Non Lancés`)/sum(sitphy00()$Consistance)),
-                                    style = function(value) {
-                                      color<-red_pal(value)
-                                      list(background=color)
-                                    }
-                )
-              ),
-              columnGroups = list(
-                colGroup(name = paste("Situation Physiques des logements"," ",paste(select_segment_title(),collapse = "+")), columns = colnames(sitphy00()))
-              ),
-              defaultColDef = colDef(footerStyle = list(fontWeight = "bold")),
-              onClick = "select",
-              theme = reactableTheme(
-                rowSelectedStyle = list(backgroundColor = "#9fc693", boxShadow = "inset 2px 0 0 0 #ffa62d"),
-                style = list(fontSize = "15px"),
-
-              )
-    )
-  })
-
-  output$selected2 <- renderPrint({
-    print(selected2())
-  })
-
-  observe({
-    print(sitphy0[selected2(), ])
-  })
 
   #################################
   output$wilayaselect1<-renderText({
@@ -8270,13 +7818,13 @@ app_server <- function( input, output, session ) {
 
   output$loi1=renderText({
     format((zones %>% filter(id_wilaya %in% selected()) %>%
-              summarise(sumnb=sum(Déposés,na.rm=TRUE)))$sumnb,big.mark=" ",trim=TRUE,digits=3)
+              summarise(sumnb=sum(`Déposés`,na.rm=TRUE)))$sumnb,big.mark=" ",trim=TRUE,digits=3)
   })
 
 
   output$loi2=renderText({
     format((zones %>% filter(id_wilaya %in% selected()) %>%
-              summarise(sumnb=sum(Traités,na.rm=TRUE)))$sumnb,big.mark=" ",trim=TRUE,digits=3)
+              summarise(sumnb=sum(`Traités`,na.rm=TRUE)))$sumnb,big.mark=" ",trim=TRUE,digits=3)
   })
 
 
@@ -8288,7 +7836,7 @@ app_server <- function( input, output, session ) {
 
   output$loi4=renderText({
     format((zones %>% filter(id_wilaya %in% selected()) %>%
-              summarise(sumnb=sum(Défavorables,na.rm=TRUE)))$sumnb,big.mark=" ",trim=TRUE,digits=3)
+              summarise(sumnb=sum(`Défavorables`,na.rm=TRUE)))$sumnb,big.mark=" ",trim=TRUE,digits=3)
   })
 
 
@@ -8306,7 +7854,7 @@ app_server <- function( input, output, session ) {
 
   output$loi7=renderText({
     format((zones %>% filter(id_wilaya %in% selected()) %>%
-              summarise(sumnb=sum(Traités_a,na.rm=TRUE)))$sumnb,big.mark=" ",trim=TRUE,digits=3)
+              summarise(sumnb=sum(`Traités_a`,na.rm=TRUE)))$sumnb,big.mark=" ",trim=TRUE,digits=3)
   })
 
 
@@ -8315,7 +7863,7 @@ app_server <- function( input, output, session ) {
       filter(id %in% selected()) %>%
       group_by(Type) %>%
       summarise(Notification=sum(NOTIFICATION),Reliquat=sum(Reliquat)) %>%
-      gather("etat","nb",2:3) %>% arrange(etat) %>%
+      tidyr::gather("etat","nb",2:3) %>% arrange(etat) %>%
       hchart('column',hcaes(x=Type,y=nb,group=etat),stacking="normal") %>%
       hc_tooltip(
         crosshairs=TRUE,
@@ -8378,8 +7926,8 @@ app_server <- function( input, output, session ) {
     pos %>%
       filter(id_wilaya %in% selected()) %>%
       group_by(URBANISME) %>%
-      summarise(lances=sum(Lancés),"Non Lancées"=sum(`Non Lancées`),Achevées=sum(Achevées),"En Cours"=sum(`En Cours`),approuvees=sum(Approuvées)) %>%
-      gather("etat","nb",2:5) %>% filter(etat %in% c("Non Lancées","Achevées","En Cours"))
+      summarise(lances=sum(`Lancés`),"Non Lancées"=sum(`Non Lancées`),`Achevées`=sum(`Achevées`),"En Cours"=sum(`En Cours`),approuvees=sum(`Approuvées`)) %>%
+      tidyr::gather("etat","nb",2:5) %>% filter(etat %in% c("Non Lancées","Achevées","En Cours"))
   })
 
 
@@ -8444,6 +7992,10 @@ app_server <- function( input, output, session ) {
     `if`(length(getReactableState("table", "selected"))==0,1:48,getReactableState("table", "selected"))
   )
 
+  output$selected <- renderPrint({
+    print(selected())
+  })
+
   output$table <- renderReactable({
     reactable(data.frame(Wilaya=unique(livraison_wilayas$waw)),defaultPageSize = 48,striped = TRUE,
               selection = "single",
@@ -8454,14 +8006,6 @@ app_server <- function( input, output, session ) {
                 rowSelectedStyle = list(backgroundColor = "#9fc693", boxShadow = "inset 2px 0 0 0 #ffa62d")
               )
     )
-  })
-
-  output$selected <- renderPrint({
-    print(selected())
-  })
-
-  observe({
-    print(data.frame(unique(livraison_wilayas$waw))[selected(), ])
   })
 
   output$dt_wilaya=renderDataTable({
@@ -8547,19 +8091,19 @@ app_server <- function( input, output, session ) {
                               rbind(colnames(livraison_wilayas0_donnees() %>%
                                                group_by(Annee,Segment) %>%
                                                summarise(Livraisons=sum(Livraison)) %>%
-                                               spread(key=Segment,value=Livraisons) %>%
+                                               tidyr::spread(key=Segment,value=Livraisons) %>%
                                                mutate(Annee=as.character(Annee)) %>% rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c("Total",round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t,sum(round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t) ))
                               ),
                               livraison_wilayas0_donnees() %>%
                                 group_by(Annee,Segment) %>%
                                 summarise(Livraisons=sum(Livraison)) %>%
-                                spread(key=Segment,value=Livraisons) %>%
+                                tidyr::spread(key=Segment,value=Livraisons) %>%
                                 mutate(Annee=as.character(Annee)) %>% rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c("Total",round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t,sum(round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t) ))
                               ),showToolbar = TRUE,
                               columns = data.frame(title=rep("",length(livraison_wilayas0_donnees() %>%
                                                                          group_by(Annee,Segment) %>%
                                                                          summarise(Livraisons=sum(Livraison)) %>%
-                                                                         spread(key=Segment,value=Livraisons) %>%
+                                                                         tidyr::spread(key=Segment,value=Livraisons) %>%
                                                                          mutate(Annee=as.character(Annee)) %>% rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c("Total",round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t,sum(round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t) ))
                               )))
                    ),
@@ -8577,21 +8121,21 @@ app_server <- function( input, output, session ) {
                                         rbind(colnames(livraison_wilayas0_donnees() %>%
                                                          group_by(Annee,Wilaya) %>%
                                                          summarise(Livraisons=sum(Livraison)) %>%
-                                                         spread(key = Annee,value=Livraisons) %>%
+                                                         tidyr::spread(key = Annee,value=Livraisons) %>%
                                                          rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>%
                                                          rbind(c("Total",round(livraison_wilayas0_donnees() %>% group_by(Annee) %>% summarise(t=sum(Livraison)) %>% select(t))$t,sum(round(livraison_wilayas0_donnees() %>% group_by(Annee) %>% summarise(t=sum(Livraison)) %>% select(t))$t) ))
                                         ),
                                         livraison_wilayas0_donnees() %>%
                                           group_by(Annee,Wilaya) %>%
                                           summarise(Livraisons=sum(Livraison)) %>%
-                                          spread(key = Annee,value=Livraisons) %>%
+                                          tidyr::spread(key = Annee,value=Livraisons) %>%
                                           rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>%
                                           rbind(c("Total",round(livraison_wilayas0_donnees() %>% group_by(Annee) %>% summarise(t=sum(Livraison)) %>% select(t))$t,sum(round(livraison_wilayas0_donnees() %>% group_by(Annee) %>% summarise(t=sum(Livraison)) %>% select(t))$t) ))
                                         )
                                         ,showToolbar = TRUE,columns = data.frame(title=rep("",ncol(  livraison_wilayas0_donnees() %>%
                                                                                                        group_by(Annee,Wilaya) %>%
                                                                                                        summarise(Livraisons=sum(Livraison)) %>%
-                                                                                                       spread(key = Annee,value=Livraisons) %>%
+                                                                                                       tidyr::spread(key = Annee,value=Livraisons) %>%
                                                                                                        rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>%
                                                                                                        rbind(c("Total",round(livraison_wilayas0_donnees() %>% group_by(Annee) %>% summarise(t=sum(Livraison)) %>% select(t))$t,sum(round(livraison_wilayas0_donnees() %>% group_by(Annee) %>% summarise(t=sum(Livraison)) %>% select(t))$t) ))
                                         )))
@@ -8611,19 +8155,19 @@ app_server <- function( input, output, session ) {
                                                   rbind(colnames(livraison_wilayas0_donnees() %>%
                                                                    group_by(Annee,Wilaya,Segment,)%>%
                                                                    summarise(Livraisons=sum(Livraison)) %>%
-                                                                   spread(Segment,value = Livraisons) %>%
+                                                                   tidyr::spread(Segment,value = Livraisons) %>%
                                                                    mutate(Annee=as.character(Annee)) %>% rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c(" ","Total",round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t,sum(round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t) ))
                                                   ),
                                                   livraison_wilayas0_donnees() %>%
                                                     group_by(Annee,Wilaya,Segment,)%>%
                                                     summarise(Livraisons=sum(Livraison)) %>%
-                                                    spread(Segment,value = Livraisons) %>%
+                                                    tidyr::spread(Segment,value = Livraisons) %>%
                                                     mutate(Annee=as.character(Annee)) %>% rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c(" ","Total",round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t,sum(round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t) ))
                                                   )
                                                   ,showToolbar = TRUE,columns = data.frame(title=rep("",ncol(livraison_wilayas0_donnees() %>%
                                                                                                                group_by(Annee,Wilaya,Segment,)%>%
                                                                                                                summarise(Livraisons=sum(Livraison)) %>%
-                                                                                                               spread(Segment,value = Livraisons) %>%
+                                                                                                               tidyr::spread(Segment,value = Livraisons) %>%
                                                                                                                mutate(Annee=as.character(Annee)) %>% rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c(" ","Total",round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t,sum(round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t) ))
                                                   )))
                                        ),
@@ -8631,19 +8175,19 @@ app_server <- function( input, output, session ) {
                                                   rbind(colnames(livraison_wilayas0_donnees() %>%
                                                                    group_by(Wilaya,Segment,)%>%
                                                                    summarise(Livraisons=sum(Livraison)) %>%
-                                                                   spread(Segment,value = Livraisons) %>%
+                                                                   tidyr::spread(Segment,value = Livraisons) %>%
                                                                    rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c("Total",round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t,sum(round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t) ))
                                                   ),
                                                   livraison_wilayas0_donnees() %>%
                                                     group_by(Wilaya,Segment,)%>%
                                                     summarise(Livraisons=sum(Livraison)) %>%
-                                                    spread(Segment,value = Livraisons) %>%
+                                                    tidyr::spread(Segment,value = Livraisons) %>%
                                                     rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c("Total",round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t,sum(round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t) ))
                                                   )
                                                   ,showToolbar = TRUE,columns = data.frame(title=rep("",ncol(livraison_wilayas0_donnees() %>%
                                                                                                                group_by(Wilaya,Segment,)%>%
                                                                                                                summarise(Livraisons=sum(Livraison)) %>%
-                                                                                                               spread(Segment,value = Livraisons) %>%
+                                                                                                               tidyr::spread(Segment,value = Livraisons) %>%
                                                                                                                rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c("Total",round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t,sum(round(livraison_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Livraison)) %>% select(t))$t) ))
                                                   )))
                                        )
@@ -8688,19 +8232,19 @@ app_server <- function( input, output, session ) {
                               rbind(colnames(lancement_wilayas0_donnees() %>%
                                                group_by(Annee,Segment) %>%
                                                summarise(Lancements=sum(Lancement)) %>%
-                                               spread(key=Segment,value=Lancements) %>%
+                                               tidyr::spread(key=Segment,value=Lancements) %>%
                                                mutate(Annee=as.character(Annee)) %>% rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c("Total",round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t,sum(round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t) ))
                               ),
                               lancement_wilayas0_donnees() %>%
                                 group_by(Annee,Segment) %>%
                                 summarise(Lancements=sum(Lancement)) %>%
-                                spread(key=Segment,value=Lancements) %>%
+                                tidyr::spread(key=Segment,value=Lancements) %>%
                                 mutate(Annee=as.character(Annee)) %>% rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c("Total",round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t,sum(round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t) ))
                               ),showToolbar = TRUE,
                               columns = data.frame(title=rep("",length(lancement_wilayas0_donnees() %>%
                                                                          group_by(Annee,Segment) %>%
                                                                          summarise(Lancements=sum(Lancement)) %>%
-                                                                         spread(key=Segment,value=Lancements) %>%
+                                                                         tidyr::spread(key=Segment,value=Lancements) %>%
                                                                          mutate(Annee=as.character(Annee)) %>% rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c("Total",round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t,sum(round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t) ))
                               )))
                    ),
@@ -8718,21 +8262,21 @@ app_server <- function( input, output, session ) {
                                         rbind(colnames(lancement_wilayas0_donnees() %>%
                                                          group_by(Annee,Wilaya) %>%
                                                          summarise(Lancements=sum(Lancement)) %>%
-                                                         spread(key = Annee,value=Lancements) %>%
+                                                         tidyr::spread(key = Annee,value=Lancements) %>%
                                                          rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>%
                                                          rbind(c("Total",round(lancement_wilayas0_donnees() %>% group_by(Annee) %>% summarise(t=sum(Lancement)) %>% select(t))$t,sum(round(lancement_wilayas0_donnees() %>% group_by(Annee) %>% summarise(t=sum(Lancement)) %>% select(t))$t) ))
                                         ),
                                         lancement_wilayas0_donnees() %>%
                                           group_by(Annee,Wilaya) %>%
                                           summarise(Lancements=sum(Lancement)) %>%
-                                          spread(key = Annee,value=Lancements) %>%
+                                          tidyr::spread(key = Annee,value=Lancements) %>%
                                           rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>%
                                           rbind(c("Total",round(lancement_wilayas0_donnees() %>% group_by(Annee) %>% summarise(t=sum(Lancement)) %>% select(t))$t,sum(round(lancement_wilayas0_donnees() %>% group_by(Annee) %>% summarise(t=sum(Lancement)) %>% select(t))$t) ))
                                         )
                                         ,showToolbar = TRUE,columns = data.frame(title=rep("",ncol(  lancement_wilayas0_donnees() %>%
                                                                                                        group_by(Annee,Wilaya) %>%
                                                                                                        summarise(Lancements=sum(Lancement)) %>%
-                                                                                                       spread(key = Annee,value=Lancements) %>%
+                                                                                                       tidyr::spread(key = Annee,value=Lancements) %>%
                                                                                                        rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>%
                                                                                                        rbind(c("Total",round(lancement_wilayas0_donnees() %>% group_by(Annee) %>% summarise(t=sum(Lancement)) %>% select(t))$t,sum(round(lancement_wilayas0_donnees() %>% group_by(Annee) %>% summarise(t=sum(Lancement)) %>% select(t))$t) ))
                                         )))
@@ -8752,19 +8296,19 @@ app_server <- function( input, output, session ) {
                                                   rbind(colnames(lancement_wilayas0_donnees() %>%
                                                                    group_by(Annee,Wilaya,Segment,)%>%
                                                                    summarise(Lancements=sum(Lancement)) %>%
-                                                                   spread(Segment,value = Lancements) %>%
+                                                                   tidyr::spread(Segment,value = Lancements) %>%
                                                                    mutate(Annee=as.character(Annee)) %>% rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c(" ","Total",round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t,sum(round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t) ))
                                                   ),
                                                   lancement_wilayas0_donnees() %>%
                                                     group_by(Annee,Wilaya,Segment,)%>%
                                                     summarise(Lancements=sum(Lancement)) %>%
-                                                    spread(Segment,value = Lancements) %>%
+                                                    tidyr::spread(Segment,value = Lancements) %>%
                                                     mutate(Annee=as.character(Annee)) %>% rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c(" ","Total",round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t,sum(round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t) ))
                                                   )
                                                   ,showToolbar = TRUE,columns = data.frame(title=rep("",ncol(lancement_wilayas0_donnees() %>%
                                                                                                                group_by(Annee,Wilaya,Segment,)%>%
                                                                                                                summarise(Lancements=sum(Lancement)) %>%
-                                                                                                               spread(Segment,value = Lancements) %>%
+                                                                                                               tidyr::spread(Segment,value = Lancements) %>%
                                                                                                                mutate(Annee=as.character(Annee)) %>% rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c(" ","Total",round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t,sum(round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t) ))
                                                   )))
                                        ),
@@ -8772,19 +8316,19 @@ app_server <- function( input, output, session ) {
                                                   rbind(colnames(lancement_wilayas0_donnees() %>%
                                                                    group_by(Wilaya,Segment)%>%
                                                                    summarise(Lancements=sum(Lancement)) %>%
-                                                                   spread(Segment,value = Lancements) %>%
+                                                                   tidyr::spread(Segment,value = Lancements) %>%
                                                                    rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c("Total",round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t,sum(round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t) ))
                                                   ),
                                                   lancement_wilayas0_donnees() %>%
                                                     group_by(Wilaya,Segment)%>%
                                                     summarise(Lancements=sum(Lancement)) %>%
-                                                    spread(Segment,value = Lancements) %>%
+                                                    tidyr::spread(Segment,value = Lancements) %>%
                                                     rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c("Total",round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t,sum(round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t) ))
                                                   )
                                                   ,showToolbar = TRUE,columns = data.frame(title=rep("",ncol(lancement_wilayas0_donnees() %>%
                                                                                                                group_by(Wilaya,Segment)%>%
                                                                                                                summarise(Lancements=sum(Lancement)) %>%
-                                                                                                               spread(Segment,value = Lancements) %>%
+                                                                                                               tidyr::spread(Segment,value = Lancements) %>%
                                                                                                                rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c("Total",round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t,sum(round(lancement_wilayas0_donnees() %>% group_by(Segment) %>% summarise(t=sum(Lancement)) %>% select(t))$t) ))
                                                   )))
                                        )
@@ -8913,13 +8457,13 @@ app_server <- function( input, output, session ) {
     `if`(input$radio_choose_line1=="Livraisons de Logements",
          excelTable(editable = FALSE,
                     rbind(c(colnames(daa2()%>%
-                                       spread(key=type_de_logement,value = liv) %>% rename("Année"=annee) ),"Total"),
+                                       tidyr::spread(key=type_de_logement,value = liv) %>% rename("Année"=annee) ),"Total"),
                           data.frame(daa2()%>%
-                                       spread(key=type_de_logement,value = liv) %>%
+                                       tidyr::spread(key=type_de_logement,value = liv) %>%
                                        mutate(annee=as.character(annee)) %>% rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c("Total",round(daa2() %>% group_by(type_de_logement) %>% summarise(t=sum(liv)) %>% select(t))$t,sum(round(daa2() %>% group_by(type_de_logement) %>% summarise(t=sum(liv)) %>% select(t))$t) ))
                           )
                     ),showToolbar = TRUE,columns = data.frame(title=rep("",1+ncol(data.frame(data.frame(daa2()%>%
-                                                                                                          spread(key=type_de_logement,value = liv))))))
+                                                                                                          tidyr::spread(key=type_de_logement,value = liv))))))
          ),
          `if`(input$radio_choose_line1=="TOL",
               excelTable(editable = FALSE,
@@ -8934,13 +8478,13 @@ app_server <- function( input, output, session ) {
               ,
               excelTable(editable = FALSE,
                          rbind(c(colnames(daa2_lancement()%>%
-                                            spread(key=Segment,value = lanc) %>% rename("Année"=Annee) ),"Total"),
+                                            tidyr::spread(key=Segment,value = lanc) %>% rename("Année"=Annee) ),"Total"),
                                data.frame(daa2_lancement()%>%
-                                            spread(key=Segment,value = lanc) %>%
+                                            tidyr::spread(key=Segment,value = lanc) %>%
                                             mutate(Annee=as.character(Annee)) %>% rowwise() %>% mutate(Total=sum(c_across(where(is.numeric)))) %>% rbind(c("Total",round(daa2_lancement() %>% group_by(Segment) %>% summarise(t=sum(lanc)) %>% select(t))$t,sum(round(daa2_lancement() %>% group_by(Segment) %>% summarise(t=sum(lanc)) %>% select(t))$t) ))
                                )
                          ),showToolbar = TRUE,columns = data.frame(title=rep("",1+ncol(data.frame(data.frame(daa2_lancement()%>%
-                                                                                                               spread(key=Segment,value = lanc))))))
+                                                                                                               tidyr::spread(key=Segment,value = lanc))))))
               )
 
          )
@@ -9111,14 +8655,14 @@ app_server <- function( input, output, session ) {
             sprintf("%+3.1f %%",100*(
 
               (
-                before00 %>% filter(Segment %in% segments_reactive(),id_wilaya %in% as.numeric(str_sub(wilaya_reactive(),1,2))) %>%
+                before00 %>% filter(Segment %in% segments_reactive(),id_wilaya %in% as.numeric(stringr::str_sub(wilaya_reactive(),1,2))) %>%
                   summarise(liv_before=sum(Livraison)) %>% select(liv_before)+
                   round(livraison_wilayas%>%
                           filter(annee <= max(input$annees),type_de_logement %in% segments_reactive(),waw %in% wilaya_reactive())%>%
                           summarise(liva2=sum(Livraison))%>%
                           select(liva2))$liva2)
               -(
-                before00 %>% filter(Segment %in% segments_reactive(),id_wilaya %in% as.numeric(str_sub(wilaya_reactive(),1,2))) %>%
+                before00 %>% filter(Segment %in% segments_reactive(),id_wilaya %in% as.numeric(stringr::str_sub(wilaya_reactive(),1,2))) %>%
                   summarise(liv_before=sum(Livraison)) %>% select(liv_before)+
                   round(livraison_wilayas%>%
                           filter(annee<=min(input$annees),type_de_logement %in% segments_reactive(),waw %in% wilaya_reactive())%>%
@@ -9126,7 +8670,7 @@ app_server <- function( input, output, session ) {
                           select(liva2))$liva2)
             )/
               (
-                before00 %>% filter(Segment %in% segments_reactive(),id_wilaya %in% as.numeric(str_sub(wilaya_reactive(),1,2))) %>%
+                before00 %>% filter(Segment %in% segments_reactive(),id_wilaya %in% as.numeric(stringr::str_sub(wilaya_reactive(),1,2))) %>%
                   summarise(liv_before=sum(Livraison)) %>% select(liv_before)+
                   round(livraison_wilayas%>%
                           filter(annee<=min(input$annees),type_de_logement %in% segments_reactive(),waw %in% wilaya_reactive())%>%
@@ -9159,7 +8703,7 @@ app_server <- function( input, output, session ) {
              sprintf("%+3.1f %%",100*(
 
                (
-                 before00 %>% filter(Segment %in% segments_reactive(),id_wilaya %in% as.numeric(str_sub(wilaya_reactive(),1,2))) %>%
+                 before00 %>% filter(Segment %in% segments_reactive(),id_wilaya %in% as.numeric(stringr::str_sub(wilaya_reactive(),1,2))) %>%
                    summarise(lanc_before=sum(Lancement)) %>% select(lanc_before)+
                    round(lancement_wilayas%>%
                            filter(Annee <= max(input$annees),Segment %in% segments_reactive(),Wilaya %in% wilaya_reactive())%>%
@@ -9167,7 +8711,7 @@ app_server <- function( input, output, session ) {
                            select(lanc2))$lanc2
                )
                -(
-                 before00 %>% filter(Segment %in% segments_reactive(),id_wilaya %in% as.numeric(str_sub(wilaya_reactive(),1,2))) %>%
+                 before00 %>% filter(Segment %in% segments_reactive(),id_wilaya %in% as.numeric(stringr::str_sub(wilaya_reactive(),1,2))) %>%
                    summarise(lanc_before=sum(Lancement)) %>% select(lanc_before)+
                    round(lancement_wilayas%>%
                            filter(Annee<=min(input$annees),Segment %in% segments_reactive(),Wilaya %in% wilaya_reactive())%>%
@@ -9175,7 +8719,7 @@ app_server <- function( input, output, session ) {
                            select(lanc2))$lanc2)
              )/
                (
-                 before00 %>% filter(Segment %in% segments_reactive(),id_wilaya %in% as.numeric(str_sub(wilaya_reactive(),1,2))) %>%
+                 before00 %>% filter(Segment %in% segments_reactive(),id_wilaya %in% as.numeric(stringr::str_sub(wilaya_reactive(),1,2))) %>%
                    summarise(lanc_before=sum(Lancement)) %>% select(lanc_before)+
                    round(lancement_wilayas%>%
                            filter(Annee<=min(input$annees),Segment %in% segments_reactive(),Wilaya %in% wilaya_reactive())%>%
@@ -9674,7 +9218,7 @@ app_server <- function( input, output, session ) {
                                   datamc_maps_reactive()$Statut,
                                   datamc_maps_reactive()$Annee_entree,
                                   datamc_maps_reactive()$`Capacité nominale installée`,
-                                  datamc_maps_reactive()$unité,
+                                  datamc_maps_reactive()$`unité`,
                                   datamc_maps_reactive()$`Production effective`,
                                   datamc_maps_reactive()$`Produits fabriqués`,
                                   datamc_maps_reactive()$TEL,

@@ -1,0 +1,100 @@
+ @import url("https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600");
+ @import url("https://fonts.googleapis.com/css?family=La+Belle+Aurore");
+ @import url("https://fonts.googleapis.com/css?family=Exo:700,800");
+
+#well22 {
+ height:400px;
+ width:300px;
+}
+
+
+
+#page {
+    box-sizing: border-box;
+    padding-bottom: 0px;
+    overflow: hidden;
+    padding-top: 100px;
+}
+
+.container.home-page{
+    zoom: 1.4;
+    padding-top: 27px;
+    height: 92px;
+}
+
+.text-zone {
+    transform: translateY(-50%);
+    width: 100%;
+    font-family: "Titillium Web", sans-serif;
+    padding-left: 226px;
+	background:transparent;
+}
+
+.text-zone a {
+	 font-weight: 300;
+}
+ .home-page h1 {
+    color: #fff;
+    font-size: 53px;
+    line-height: 48px;
+    margin: 0;
+    font-family: "Exo", sans-serif;
+    font-weight: normal;
+}
+ .home-page h1::before {
+	 font-family: "La Belle Aurore", cursive;
+	 color: #10364e;
+	 font-size: 18px;
+	 position: absolute;
+	 margin-top: -35px;
+}
+ .home-page h1::after {
+	 font-family: "La Belle Aurore", cursive;
+	 color: #10364e;
+	 font-size: 18px;
+	 position: absolute;
+	 margin-top: 18px;
+	 margin-left: 20px;
+	 -webkit-animation: myanim2 1s 3s backwards;
+	 animation: myanim2 1s 3s backwards;
+}
+ /* .home-page h2 {
+    color: #d8be68;
+    margin-top: 9px;
+    font-weight: 400;
+    font-size: 9px;
+    font-family: "Titillium Web", sans-serif;
+    letter-spacing: 2px;
+    -webkit-animation: myanim2 1s 2.5s backwards;
+    animation: myanim2 1s 2.5s backwards;
+    padding-bottom: 50px;
+    cursor: help;
+} */
+ .home-page .flat-button {
+    opacity: 0.9;
+    color: antiquewhite;
+    font-size: 13px;
+    letter-spacing: 3px;
+    font-family: "Open Sans", sans-serif;
+    text-decoration: none;
+    border: 1px solid #d8be68;
+    margin-top: 170px;
+    float: left;
+    border-radius: 4px;
+    background-color: #0b2535;
+}
+ .home-page .flat-button:hover {
+	 background: #d8be68;
+	 color: #0b2535;
+     opacity: 1;
+}
+ .home-page .blast {
+	 opacity: 0;
+	 display: inline-block;
+	 -webkit-transition: all 0.3s ease-out;
+	 transition: all 0.3s ease-out;
+}
+ .home-page .blast:hover {
+	 color: #d8be68;
+}
+ 

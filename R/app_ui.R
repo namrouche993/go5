@@ -3,10 +3,14 @@
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
 #' @import shiny
+#' @import dplyr
+#' @import tidyr
 #' @import leaflet
+#' @import leaflet-providers
 #' @import shinyWidgets
+#' @import shinyBS
 #' @importFrom highcharter highchartOutput
-#' @importFrom shinyBS bsModal
+#' @importFrom shinyBS shinyBS::bsModal
 #' @importFrom excelR excelOutput
 #' @importFrom reactable reactableOutput
 #' @importFrom shinycssloaders withSpinner
@@ -132,7 +136,7 @@ app_ui <- function(request) {
                                      wellPanel(id="well1",
                                                tags$div(class="chart-title",HTML('&nbsp;'),HTML('&nbsp;'),textOutput("titre_hchart1"),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),textOutput("titre_serie"),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),textOutput("titre_serie1_hchart1"),
 
-                                                        actionBttn(
+                                                        shinyWidgets::actionBttn(
                                                           inputId = "tabmodalserie1",
                                                           label = NULL,
                                                           style = "bordered",
@@ -140,7 +144,7 @@ app_ui <- function(request) {
                                                           icon = icon("table")
                                                         ),
 
-                                                        actionBttn(
+                                                        shinyWidgets::actionBttn(
                                                           inputId = "choose_line1",
                                                           label = NULL,
                                                           style = "simple",
@@ -178,14 +182,14 @@ app_ui <- function(request) {
 
                                                         tags$div(class="chart-title",HTML('&nbsp;'),HTML('&nbsp;'),textOutput('titre_pie'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),textOutput("titre_serie2"),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),textOutput("periode"),
 
-                                                                 actionBttn(
+                                                                 shinyWidgets::actionBttn(
                                                                    inputId = "tabmodalserie2",
                                                                    label = NULL,
                                                                    style = "bordered",
                                                                    color = "success",
                                                                    icon = icon("table")
                                                                  ),
-                                                                 actionBttn(
+                                                                 shinyWidgets::actionBttn(
                                                                    inputId = "choose_line1_pie",
                                                                    label = NULL,
                                                                    style = "simple",
@@ -216,7 +220,7 @@ app_ui <- function(request) {
                                      wellPanel(id="well1",
                                                tags$div(class="chart-title",HTML('&nbsp;'),HTML('&nbsp;'),textOutput("titre_map"),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),textOutput("titre_serie3"),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),textOutput("periode2"),
 
-                                                        actionBttn(
+                                                        shinyWidgets::actionBttn(
                                                           inputId = "tabmodalserie3",
                                                           label = NULL,
                                                           style = "bordered",
@@ -224,7 +228,7 @@ app_ui <- function(request) {
                                                           icon = icon("table")
                                                         ),
 
-                                                        actionBttn(
+                                                        shinyWidgets::actionBttn(
                                                           inputId = "choose_leaflet",
                                                           label = NULL,
                                                           style = "simple",
@@ -257,13 +261,13 @@ app_ui <- function(request) {
 
                             ),
                             #tabmodalserie_eqp
-                            bsModal("modal1", htmlOutput("tablededonnes1"), "tabmodalserie1", size = "large"
+                            shinyBS::bsModal("modal1", htmlOutput("tablededonnes1"), "tabmodalserie1", size = "large"
                                     ,excelOutput("excel1",height="500px")),
 
-                            bsModal("modal2",htmlOutput("tablededonnes2"), "tabmodalserie2", size = "large"
+                            shinyBS::bsModal("modal2",htmlOutput("tablededonnes2"), "tabmodalserie2", size = "large"
                                     ,excelOutput("excel2")),
 
-                            bsModal("modal3",htmlOutput("tablededonnes3"), "tabmodalserie3", size = "large"
+                            shinyBS::bsModal("modal3",htmlOutput("tablededonnes3"), "tabmodalserie3", size = "large"
                                     ,excelOutput("excel3")),
                             textOutput('verification_leaflet')
                    ),
@@ -293,7 +297,7 @@ app_ui <- function(request) {
                                                div(id = "box-score1",
                                                    div(id = "box-score-title1", "État d'Exécution du Programme - Situation au ",textOutput("boxscore1_arretee"),textOutput("boxscore1_wilaya")),
                                                    reactableOutput('gt1',width = '1082px'),
-                                                   actionBttn(
+                                                   shinyWidgets::actionBttn(
                                                      inputId = "button_fw1",
                                                      label = NULL,
                                                      style = "bordered",
@@ -316,7 +320,7 @@ app_ui <- function(request) {
 
                                                    reactableOutput('gt7',width = '1060px'),
 
-                                                   actionBttn(
+                                                   shinyWidgets::actionBttn(
                                                      inputId = "button_fw7",
                                                      label = NULL,
                                                      style = "bordered",
@@ -333,7 +337,7 @@ app_ui <- function(request) {
 
 
                                                # div(id = "box-score2",
-                                               #     actionBttn(
+                                               #     shinyWidgets::actionBttn(
                                                #       inputId = "button_fw2",
                                                #       label = NULL,
                                                #       style = "bordered",
@@ -355,7 +359,7 @@ app_ui <- function(request) {
                                                # div(class = "box-score",
                                                #     div(class = "box-score-title", "État des Livraisons au ",textOutput("boxscore5_arretee"),textOutput("boxscore5_wilaya")),
                                                #     reactableOutput('gt5'),
-                                               #     actionBttn(
+                                               #     shinyWidgets::actionBttn(
                                                #       inputId = "button_fw4",
                                                #       label = NULL,
                                                #       style = "bordered",
@@ -365,22 +369,22 @@ app_ui <- function(request) {
                                                # ),
                                                # uiOutput("ui_boxscore6"),
 
-                                               bsModal("modal_fw1", htmlOutput("tablededonnes1_fw1"), "button_fw1", size = "large"
+                                               shinyBS::bsModal("modal_fw1", htmlOutput("tablededonnes1_fw1"), "button_fw1", size = "large"
                                                        ,excelOutput("excel_fw1")),
 
-                                               bsModal("modal_fw7", htmlOutput("tablededonnes1_fw7"), "button_fw7", size = "large"
+                                               shinyBS::bsModal("modal_fw7", htmlOutput("tablededonnes1_fw7"), "button_fw7", size = "large"
                                                        ,excelOutput("excel_fw7")),
 
-                                               # bsModal("modal_fw2", htmlOutput("tablededonnes1_fw2"), "button_fw2", size = "large"
+                                               # shinyBS::bsModal("modal_fw2", htmlOutput("tablededonnes1_fw2"), "button_fw2", size = "large"
                                                #         ,excelOutput("excel_fw2")),
-                                               # bsModal("modal_fw3", htmlOutput("tablededonnes1_fw3"), "button_fw3", size = "large"
+                                               # shinyBS::bsModal("modal_fw3", htmlOutput("tablededonnes1_fw3"), "button_fw3", size = "large"
                                                #         ,excelOutput("excel_fw3"))
-                                               # bsModal("modal_fw4", htmlOutput("tablededonnes1_fw4"), "button_fw4", size = "large"
+                                               # shinyBS::bsModal("modal_fw4", htmlOutput("tablededonnes1_fw4"), "button_fw4", size = "large"
                                                #         ,excelOutput("excel_fw4")),
-                                               # bsModal("modal_fw5", htmlOutput("tablededonnes1_fw5"), "button_fw5", size = "large"
+                                               # shinyBS::bsModal("modal_fw5", htmlOutput("tablededonnes1_fw5"), "button_fw5", size = "large"
                                                #         ,excelOutput("excel_fw5"))
 
-                                               #bsModal("modal_eqp", htmlOutput("tablededonnes1_eqp"), "tabmodalserie_eqp", size = "large"
+                                               #shinyBS::bsModal("modal_eqp", htmlOutput("tablededonnes1_eqp"), "tabmodalserie_eqp", size = "large"
                                                #,excelOutput("excel_eqp")),
 
                                      )
@@ -411,7 +415,7 @@ app_ui <- function(request) {
                    #                   #   status = "success"
                    #                   # ),
                    #                   #
-                   #                   actionBttn(
+                   #                   shinyWidgets::actionBttn(
                    #                     inputId = "tabmodal_sitphy",
                    #                     label = NULL,
                    #                     style = "bordered",
@@ -485,7 +489,7 @@ app_ui <- function(request) {
                    #
                    #            ),
                    #
-                   #            bsModal("modal_sitphy",htmlOutput("tablededonnes1_sitphy"), "tabmodal_sitphy", size = "large"
+                   #            shinyBS::bsModal("modal_sitphy",htmlOutput("tablededonnes1_sitphy"), "tabmodal_sitphy", size = "large"
                    #                    ,excelOutput("excel_sitphy"))
                    #          ),
                    #          pickerInput(
@@ -517,7 +521,7 @@ app_ui <- function(request) {
                      column(6,
                             wellPanel(id="urbanisme_well",style="width:100% ; height:380px;",
                                       tags$div(class="chart-title-urbanisme",HTML('&nbsp;'),HTML('&nbsp;'),tags$p("Instruments d'Urbanisme : "),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),textOutput("wilayaselect1"),
-                                               actionBttn(
+                                               shinyWidgets::actionBttn(
                                                  inputId = "tabmodalserie_urbanisme1",
                                                  label = NULL,
                                                  style = "bordered",
@@ -531,7 +535,7 @@ app_ui <- function(request) {
 
                             wellPanel(id="urbanisme_well2",style="width:100% ; height:380px;",
                                       tags$div(class="chart-title-urbanisme2",HTML('&nbsp;'),HTML('&nbsp;'),"Situation Financières : ",HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),textOutput("wilayaselect2"),
-                                               actionBttn(
+                                               shinyWidgets::actionBttn(
                                                  inputId = "tabmodalserie_urbanisme2",
                                                  label = NULL,
                                                  style = "bordered",
@@ -546,7 +550,7 @@ app_ui <- function(request) {
                      column(6,
                             wellPanel(id="urbanisme_well",style="width:100% ; height:380px;",
                                       tags$div(class="chart-title-urbanisme",HTML('&nbsp;'),HTML('&nbsp;'),"Lotissement sociaux : ",HTML('&nbsp;'),
-                                               actionBttn(
+                                               shinyWidgets::actionBttn(
                                                  inputId = "tabmodalserie_urbanisme3",
                                                  label = NULL,
                                                  style = "bordered",
@@ -612,7 +616,7 @@ app_ui <- function(request) {
 
                             wellPanel(id="urbanisme_well",style="width:100% ; height:380px;",
                                       tags$div(class="chart-title-urbanisme",HTML('&nbsp;'),HTML('&nbsp;'),"Loi 18-05 : ",HTML('&nbsp;'),
-                                               actionBttn(
+                                               shinyWidgets::actionBttn(
                                                  inputId = "tabmodalserie_urbanisme4",
                                                  label = NULL,
                                                  style = "bordered",
@@ -681,16 +685,16 @@ app_ui <- function(request) {
                  ),
 
 
-                 bsModal("modal_urbanisme1","Table de données", "tabmodalserie_urbanisme1", size = "large"
+                 shinyBS::bsModal("modal_urbanisme1","Table de données", "tabmodalserie_urbanisme1", size = "large"
                          ,excelOutput("excel_urbanisme1")),
 
-                 bsModal("modal_urbanisme2","Table de données", "tabmodalserie_urbanisme2", size = "large"
+                 shinyBS::bsModal("modal_urbanisme2","Table de données", "tabmodalserie_urbanisme2", size = "large"
                          ,excelOutput("excel_urbanisme2")),
 
-                 bsModal("modal_urbanisme3","Table de données", "tabmodalserie_urbanisme3", size = "large"
+                 shinyBS::bsModal("modal_urbanisme3","Table de données", "tabmodalserie_urbanisme3", size = "large"
                          ,excelOutput("excel_urbanisme3")),
 
-                 bsModal("modal_urbanisme4","Table de données", "tabmodalserie_urbanisme4", size = "large"
+                 shinyBS::bsModal("modal_urbanisme4","Table de données", "tabmodalserie_urbanisme4", size = "large"
                          ,excelOutput("excel_urbanisme4"))
 
 
@@ -720,7 +724,7 @@ app_ui <- function(request) {
                                      value=FALSE
                                    ),
                                    HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),HTML('&nbsp;'),textOutput("wilayaselecteqp"),
-                                   actionBttn(
+                                   shinyWidgets::actionBttn(
                                      inputId = "tabmodalserie_eqp",
                                      label = NULL,
                                      style = "bordered",
@@ -746,7 +750,7 @@ app_ui <- function(request) {
 
                    ),
 
-                   bsModal("modal_eqp", htmlOutput("tablededonnes1_eqp"), "tabmodalserie_eqp", size = "large"
+                   shinyBS::bsModal("modal_eqp", htmlOutput("tablededonnes1_eqp"), "tabmodalserie_eqp", size = "large"
                            ,excelOutput("excel_eqp")),
 
                  ),
@@ -793,14 +797,14 @@ app_ui <- function(request) {
                                 htmlOutput("homepage_ren"),
                                 useShinyjs(),
 
-                                actionBttn(
+                                shinyWidgets::actionBttn(
                                   inputId = "homepage_button1",
                                   label = "Organigramme",
                                   style = "bordered",
                                   color = "primary"
                                 ),
                                 #tags$a(href="http://www.mhuv.gov.dz/fr/accueil/",target="_blank",
-                                actionBttn(
+                                shinyWidgets::actionBttn(
                                   inputId = "homepage_button2",
                                   label = "Indicateur Wilaya",
                                   style = "bordered",
@@ -808,16 +812,16 @@ app_ui <- function(request) {
                                 )
                                 #)
                                 ,
-                                actionBttn(
+                                shinyWidgets::actionBttn(
                                   inputId = "homepage_button3",
                                   label = HTML("Organismes <br> sous tutelle"),
                                   style = "bordered",
                                   color = "primary"
                                 ),
 
-                                bsModal("modal_homepage1",HTML("<h3 style='display:inline'> Organigramme du MHUV</h3> <br> <h6> (Pour faire le Zoom : Appuyer sur Ctrl + ou Ctrl - sur le clavier)"), "homepage_button1", size = "large"
+                                shinyBS::bsModal("modal_homepage1",HTML("<h3 style='display:inline'> Organigramme du MHUV</h3> <br> <h6> (Pour faire le Zoom : Appuyer sur Ctrl + ou Ctrl - sur le clavier)"), "homepage_button1", size = "large"
                                         ,htmlOutput("html_homepage1")),
-                                bsModal("modal_homepage3",HTML("<h3 style='margin:-5px;font-family:sans-serif;font-size:23px;'>Organismes sous tutelle</h3>"), "homepage_button3", size = "large"
+                                shinyBS::bsModal("modal_homepage3",HTML("<h3 style='margin:-5px;font-family:sans-serif;font-size:23px;'>Organismes sous tutelle</h3>"), "homepage_button3", size = "large"
                                         #,uiOutput("html_homepage3")
 
                                         ,tags$div(id='organisme_fluidrow',
@@ -828,12 +832,12 @@ app_ui <- function(request) {
 
 
                                 ),
-                                bsModal("modal_wilayas58", textOutput("title_organismesoustutelle"), "preview", size = "large"
+                                shinyBS::bsModal("modal_wilayas58", textOutput("title_organismesoustutelle"), "preview", size = "large"
                                         ,reactableOutput("reactable_58wilayas")),
 
 
 
-                                bsModal("modal_homepage2",HTML("<h3 style='margin:-5px;font-family:sans-serif;font-size:23px;'>Indicateur Wilaya</h3>"), "homepage_button2", size = "large"
+                                shinyBS::bsModal("modal_homepage2",HTML("<h3 style='margin:-5px;font-family:sans-serif;font-size:23px;'>Indicateur Wilaya</h3>"), "homepage_button2", size = "large"
                                         #,uiOutput("html_homepage3")
 
                                         ,tags$div(id='indicateur_fluidrow',
@@ -844,7 +848,7 @@ app_ui <- function(request) {
 
 
                                 ),
-                                bsModal("modal_wilayas58_indicateur", textOutput("title_indicateur"), "preview_indicateur", size = "large"
+                                shinyBS::bsModal("modal_wilayas58_indicateur", textOutput("title_indicateur"), "preview_indicateur", size = "large"
                                         ,reactableOutput("reactable_58wilayas_indicateur"))
 
 
@@ -1036,7 +1040,7 @@ app_ui <- function(request) {
                                 column(width=9,style="margin-left: 0px;width: 74%;background-color:white;",
                                        fluidRow(id="rowselect_mc",style="height: 800px;",
                                                 column(width=8,style="box-shadow:4px 5px 11px grey;background-color:white;overflow:auto;",
-                                                       actionBttn(
+                                                       shinyWidgets::actionBttn(
                                                          inputId = "choose_leaflet_mc",
                                                          label = NULL,
                                                          style = "simple",
@@ -1135,18 +1139,18 @@ app_ui <- function(request) {
                    ),
                    tabPanel("Agréments et certificats de qualification", #c'était sous le nom : Moyens de Realisation
 
-                            bsModal("modal1_mapst", htmlOutput("tablededonnes1_mapst"), "tabmodalserie1_mapst", size = "large",excelOutput("excel_mr1")),
-                            bsModal("modal2_mapst", htmlOutput("tablededonnes2_mapst"), "tabmodalserie2_mapst", size = "large",excelOutput("excel_mr2")),
-                            bsModal("modal3_mapst", htmlOutput("tablededonnes3_mapst"), "tabmodalserie3_mapst", size = "large",excelOutput("excel_mr3")),
-                            bsModal("modal4_mapst", htmlOutput("tablededonnes4_mapst"), "tabmodalserie4_mapst", size = "large",excelOutput("excel_mr4")),
-                            bsModal("modal5_mapst", htmlOutput("tablededonnes5_mapst"), "tabmodalserie5_mapst", size = "large",excelOutput("excel_mr5")),
+                            shinyBS::bsModal("modal1_mapst", htmlOutput("tablededonnes1_mapst"), "tabmodalserie1_mapst", size = "large",excelOutput("excel_mr1")),
+                            shinyBS::bsModal("modal2_mapst", htmlOutput("tablededonnes2_mapst"), "tabmodalserie2_mapst", size = "large",excelOutput("excel_mr2")),
+                            shinyBS::bsModal("modal3_mapst", htmlOutput("tablededonnes3_mapst"), "tabmodalserie3_mapst", size = "large",excelOutput("excel_mr3")),
+                            shinyBS::bsModal("modal4_mapst", htmlOutput("tablededonnes4_mapst"), "tabmodalserie4_mapst", size = "large",excelOutput("excel_mr4")),
+                            shinyBS::bsModal("modal5_mapst", htmlOutput("tablededonnes5_mapst"), "tabmodalserie5_mapst", size = "large",excelOutput("excel_mr5")),
 
 
 
-                            bsModal("modal_maps", htmlOutput("tablededonnes1_maps"), "tabmodalserie_maps", size = "large"
+                            shinyBS::bsModal("modal_maps", htmlOutput("tablededonnes1_maps"), "tabmodalserie_maps", size = "large"
                                     ,
                                     div(
-                                      actionBttn(
+                                      shinyWidgets::actionBttn(
                                         inputId = "choose_leaflet_agrement",
                                         label = NULL,
                                         style = "simple",
@@ -1183,10 +1187,10 @@ app_ui <- function(request) {
 
                             ################ promoteur immobiliers maps
 
-                            bsModal("modal_maps_prom", htmlOutput("tablededonnes1_maps_prom"), "tabmodalserie_maps_prom", size = "large"
+                            shinyBS::bsModal("modal_maps_prom", htmlOutput("tablededonnes1_maps_prom"), "tabmodalserie_maps_prom", size = "large"
                                     ,
                                     div(
-                                      actionBttn(
+                                      shinyWidgets::actionBttn(
                                         inputId = "choose_leaflet_agrement_prom",
                                         label = NULL,
                                         style = "simple",
@@ -1221,10 +1225,10 @@ app_ui <- function(request) {
 
                             ################ agence immobiliers maps
 
-                            bsModal("modal_maps_agence", htmlOutput("tablededonnes1_maps_agence"), "tabmodalserie_maps_agence", size = "large"
+                            shinyBS::bsModal("modal_maps_agence", htmlOutput("tablededonnes1_maps_agence"), "tabmodalserie_maps_agence", size = "large"
                                     ,
                                     div(
-                                      actionBttn(
+                                      shinyWidgets::actionBttn(
                                         inputId = "choose_leaflet_agrement_agence",
                                         label = NULL,
                                         style = "simple",
@@ -1258,10 +1262,10 @@ app_ui <- function(request) {
 
                             ################ ingenieurs maps debut
 
-                            bsModal("modal_maps_ing", htmlOutput("tablededonnes1_maps_ing"), "tabmodalserie_maps_ing", size = "large"
+                            shinyBS::bsModal("modal_maps_ing", htmlOutput("tablededonnes1_maps_ing"), "tabmodalserie_maps_ing", size = "large"
                                     ,
                                     div(
-                                      actionBttn(
+                                      shinyWidgets::actionBttn(
                                         inputId = "choose_leaflet_agrement_ing",
                                         label = NULL,
                                         style = "simple",
@@ -1292,16 +1296,16 @@ app_ui <- function(request) {
 
                             ################ AI maps debut
 
-                            bsModal("modal_maps_ai", htmlOutput("tablededonnes1_maps_ai"), "tabmodalserie_maps_ai", size = "large"
+                            shinyBS::bsModal("modal_maps_ai", htmlOutput("tablededonnes1_maps_ai"), "tabmodalserie_maps_ai", size = "large"
                                     ,leafletOutput("distPlot2_agrementmaps_ai",height=553)
                             ),
-                            bsModal("modal1_search", htmlOutput("tablededonnes1_search"), "tabmodalserie1_search", size = "large",reactableOutput("reactable_mr1")),
-                            #bsModal("modal1_mapst", htmlOutput("tablededonnes1_mapst"), "tabmodalserie1_mapst", size = "large",excelOutput("excel_mr1")),
+                            shinyBS::bsModal("modal1_search", htmlOutput("tablededonnes1_search"), "tabmodalserie1_search", size = "large",reactableOutput("reactable_mr1")),
+                            #shinyBS::bsModal("modal1_mapst", htmlOutput("tablededonnes1_mapst"), "tabmodalserie1_mapst", size = "large",excelOutput("excel_mr1")),
 
 
                             # ,
                             # div(
-                            #   actionBttn(
+                            #   shinyWidgets::actionBttn(
                             #     inputId = "choose_leaflet_agrement_ai",
                             #     label = NULL,
                             #     style = "simple",
@@ -1356,42 +1360,42 @@ app_ui <- function(request) {
                                      reactableOutput("table2_fichewilaya_mr")
                               ),
                               column(9,id='c12_fichewilaya_mr',style="margin-left:155px;",
-                                     actionBttn(
+                                     shinyWidgets::actionBttn(
                                        inputId = "tabmodalserie_maps",
                                        label = NULL,
                                        style = "bordered",
                                        color = "success",
                                        icon = icon("globe", lib = "glyphicon")
                                      ),
-                                     actionBttn(
+                                     shinyWidgets::actionBttn(
                                        inputId = "tabmodalserie_maps_prom",
                                        label = NULL,
                                        style = "bordered",
                                        color = "success",
                                        icon = icon("globe", lib = "glyphicon")
                                      ),
-                                     actionBttn(
+                                     shinyWidgets::actionBttn(
                                        inputId = "tabmodalserie_maps_agence",
                                        label = NULL,
                                        style = "bordered",
                                        color = "success",
                                        icon = icon("globe", lib = "glyphicon")
                                      ),
-                                     actionBttn(
+                                     shinyWidgets::actionBttn(
                                        inputId = "tabmodalserie_maps_ing",
                                        label = NULL,
                                        style = "bordered",
                                        color = "success",
                                        icon = icon("globe", lib = "glyphicon")
                                      ),
-                                     actionBttn(
+                                     shinyWidgets::actionBttn(
                                        inputId = "tabmodalserie_maps_ai",
                                        label = NULL,
                                        style = "bordered",
                                        color = "success",
                                        icon = icon("globe", lib = "glyphicon")
                                      ),
-                                     actionBttn(
+                                     shinyWidgets::actionBttn(
                                        inputId = "tabmodalserie1_mapst",
                                        label = NULL,
                                        style = "bordered",
@@ -1399,35 +1403,35 @@ app_ui <- function(request) {
                                        icon = icon("table")
                                      ),
 
-                                     actionBttn(
+                                     shinyWidgets::actionBttn(
                                        inputId = "tabmodalserie2_mapst",
                                        label = NULL,
                                        style = "bordered",
                                        color = "success",
                                        icon = icon("table")
                                      ),
-                                     actionBttn(
+                                     shinyWidgets::actionBttn(
                                        inputId = "tabmodalserie3_mapst",
                                        label = NULL,
                                        style = "bordered",
                                        color = "success",
                                        icon = icon("table")
                                      ),
-                                     actionBttn(
+                                     shinyWidgets::actionBttn(
                                        inputId = "tabmodalserie4_mapst",
                                        label = NULL,
                                        style = "bordered",
                                        color = "success",
                                        icon = icon("table")
                                      ),
-                                     actionBttn(
+                                     shinyWidgets::actionBttn(
                                        inputId = "tabmodalserie5_mapst",
                                        label = NULL,
                                        style = "bordered",
                                        color = "success",
                                        icon = icon("table")
                                      ),
-                                     actionBttn(
+                                     shinyWidgets::actionBttn(
                                        inputId = "tabmodalserie1_search",
                                        label = NULL,
                                        style = "bordered",

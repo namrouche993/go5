@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>/folderfiles/index4.html CodePen - Blast.js Animation</title>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Blast.js Examp>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="normalize.min.css">
+<link rel='stylesheet' href='animate.min.css'>
+<link rel="stylesheet" href="style4.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="page">
+		<div class="container home-page">
+			<div class="text-zone">
+				<h1 aria-label=" Hi, I’m AMROUCHE Mohamed Nadjib,data scientist,namrouche993@gmail.com." class="blast-root">
+					Ministère de l'Habitat,
+					<br>
+					de l'Urbanisme
+					<br> 
+					et de la Ville
+				</h1>
+				<h2 id='dzhabitat_h2' style="display: inline-block;cursor:help;">DZ Habitat | by : namrouche993</h2>
+				 <span id='email_span'>@gmail.com | Contact : 1717 | AMROUCHE MOHAMED NADJIB</span>
+				
+				
+				
+
+			</div>
+		</div>
+	</div>
+<!-- partial -->
+<script src='jquery.min.js'></script>
+<script src='velocity.min.js'></script>
+<script src='velocity.ui.min.js'></script>
+<script  src="script4.js"></script>
+
+<style>
+	
+.container.home-page{
+    zoom: 1.4;
+    padding-top: 137px;
+    height: 92px;
+}
+    
+#dzhabitat_h2:hover + #email_span:not(:hover)  {
+    opacity: 1;
+}
+
+#email_span:not(:hover) {
+    color: #d8be68;
+    margin-top: 9px;
+    font-weight: 400;
+    font-size: 9px;
+    font-family: 'Titillium Web', sans-serif;
+    letter-spacing: 2px;
+    -webkit-animation: myanim2 1s 2.5s backwards;
+    animation: myanim2 1s 2.5s backwards;
+    padding-bottom: 50px;
+    font-weight: bold;
+    opacity: 0;
+    margin-left: -4px;
+    cursor: help;
+    padding-right: 60px;
+
+}
+
+#email_span:hover {
+	opacity:1;
+    color: #d8be68;
+    margin-top: 9px;
+    font-weight: 400;
+    font-size: 9px;
+    font-family: 'Titillium Web', sans-serif;
+    letter-spacing: 2px;
+    -webkit-animation: myanim2 1s 2.5s backwards;
+    animation: myanim2 1s 2.5s backwards;
+    padding-bottom: 50px;
+    font-weight: bold;
+    margin-left: -4px;
+    cursor: help;
+    padding-right: 60px;
+}
+
+.home-page h2 {
+    color: #d8be68;
+    margin-top: 9px;
+    font-weight: 600;
+    font-size: 9px;
+    font-family: "Titillium Web", sans-serif;
+    letter-spacing: 2px;
+    -webkit-animation: myanim2 1s 2.5s backwards;
+    animation: myanim2 1s 2.5s backwards;
+    padding-bottom: 180px;
+    cursor: help;
+}
+
+
+</style>
+
+</body>
+</html>

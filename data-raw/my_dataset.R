@@ -44,6 +44,8 @@ usethis::use_data(     livraison_wilayas,
 
                        equip,equip11,
 
+                       data_ville,
+
                        moyens_realisation,
                        moyens_realisation2,
                        etp_categoris59,
@@ -62,6 +64,8 @@ usethis::use_data(     livraison_wilayas,
 
                        overwrite = TRUE,internal = TRUE)
 
+
+usethis::use_data()
 
 #
 # usethis::use_data(
